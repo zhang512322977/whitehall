@@ -143,7 +143,7 @@ Whitehall::Application.routes.draw do
             resources :promotional_feature_items, as: :items, path: 'items', except: [:index]
           end
           member do
-            get :features, localised: true
+            get :documents
             get :document_series
             get :about
             get :people
@@ -226,9 +226,7 @@ Whitehall::Application.routes.draw do
           resources :translations, controller: 'role_translations'
         end
         resources :world_locations, only: [:index, :edit, :update, :show] do
-          member do
-            get :features, localised: true
-          end
+          get :features, localised: true
           resources :translations, controller: 'world_location_translations'
         end
         resources :feature_lists, only: [:show] do

@@ -20,8 +20,7 @@ class WorldLocation < ActiveRecord::Base
   has_many :mainstream_links,
             through: :world_location_mainstream_links,
             dependent: :destroy
-
-  include Featurable
+  has_many :feature_lists, as: :featurable, dependent: :destroy
 
   accepts_nested_attributes_for :edition_world_locations
   accepts_nested_attributes_for :mainstream_links, allow_destroy: true, reject_if: :all_blank
@@ -70,6 +69,10 @@ class WorldLocation < ActiveRecord::Base
 
   def world_location_type=(new_world_location_type)
     self.world_location_type_id = new_world_location_type && new_world_location_type.id
+  end
+
+  def feature_list_for_locale(locale)
+    feature_lists.find_by_locale(locale) || feature_lists.build(locale: locale)
   end
 
   def display_type

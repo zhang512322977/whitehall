@@ -198,8 +198,6 @@ class Organisation < ActiveRecord::Base
   include TranslatableModel
   translates :name, :logo_formatted_name, :acronym, :description, :about_us
 
-  include Featurable
-
   default_scope order(arel_table[:name])
 
   searchable title: :select_name,
