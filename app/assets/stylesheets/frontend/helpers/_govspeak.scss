@@ -238,10 +238,22 @@
     background: $panel-colour none no-repeat 98% $gutter-two-thirds;
     padding: $gutter-one-third ($gutter*2) $gutter-one-third $gutter-half;
     position: relative;
+
+    // `lead-image-sidebar` is floated right on tablets
+    // When floated it appears behind the grey box
+    @include media(tablet) {
+      display: inline-block;
+    }
+
+    &:first-child {
+      margin-top: $gutter-one-third;
+    }
+
     p {
       margin: 0;
       padding: 0;
     }
+
     ol {
       @include media(desktop) {
         list-style-position: outside;
