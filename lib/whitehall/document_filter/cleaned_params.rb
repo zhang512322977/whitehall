@@ -1,7 +1,8 @@
 module Whitehall::DocumentFilter
   class CleanedParams < ActiveSupport::HashWithIndifferentAccess
     # These filter parameters are expected to be an array of values
-    PERMITTED_ARRAY_PARAMETER_KEYS  = %w(topics departments people_ids world_locations)
+    # FIXME: topics is being renamed to policy_areas: remove it when done!
+    PERMITTED_ARRAY_PARAMETER_KEYS  = %w(topics policy_areas departments people_ids world_locations)
     # These filter params are expected to be scalar values, as defined by the strong_parameters code
     PERMITTED_SCALAR_PARAMETER_KEYS = %w(page
                                          per_page

@@ -17,7 +17,12 @@ module Whitehall::DocumentFilter
 
       @include_world_location_news  = params[:include_world_location_news]
 
-      @topics          = Array(@params[:topics])
+      if @params[:policy_areas].nil?
+        @topics = @params[:topics]
+      else
+        @topics = @params[:policy_areas]
+      end
+
       @departments     = Array(@params[:departments])
       @people_ids      = Array(@params[:people_id])
       @world_locations = Array(@params[:world_locations])

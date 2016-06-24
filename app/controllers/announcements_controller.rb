@@ -1,6 +1,13 @@
 class AnnouncementsController < DocumentsController
   enable_request_formats index: [:json, :atom]
 
+  def params
+    new_params = super
+    policy_areas = new_params.delete("topics")
+    new_params["policy_areas"] = policy_areas unless policy_areas.nil?
+    new_params
+  end
+
   def index
     expire_on_next_scheduled_publication(scheduled_announcements)
     @filter = build_document_filter

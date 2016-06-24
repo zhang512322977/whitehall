@@ -165,12 +165,12 @@ class AnnouncementsControllerTest < ActionController::TestCase
   end
 
   view_test 'index atom feed autodiscovery link includes any present filters' do
-    topic = create(:topic)
+    policy_area = create(:topic)
     organisation = create(:organisation)
 
-    get :index, topics: [topic], departments: [organisation]
+    get :index, topics: [policy_area], departments: [organisation]
 
-    assert_select_autodiscovery_link announcements_url(format: "atom", topics: [topic], departments: [organisation], host: Whitehall.public_host, protocol: Whitehall.public_protocol)
+    assert_select_autodiscovery_link announcements_url(format: "atom", topics: [policy_area], departments: [organisation], host: Whitehall.public_host, protocol: Whitehall.public_protocol)
   end
 
   view_test "index generates an atom feed for the current filter" do
@@ -222,14 +222,14 @@ class AnnouncementsControllerTest < ActionController::TestCase
     end
   end
 
-  view_test "index requested as JSON includes email signup path with organisation and topic parameters" do
-    topic = create(:topic)
+  view_test "index requested as JSON includes email signup path with organisation and policy_area parameters" do
+    policy_area = create(:topic)
     organisation = create(:organisation)
 
-    get :index, format: :json, to_date: "2012-01-01", topics: [topic.slug], departments: [organisation.slug]
+    get :index, format: :json, to_date: "2012-01-01", topics: [policy_area.slug], departments: [organisation.slug]
 
     json = ActiveSupport::JSON.decode(response.body)
-    atom_url = announcements_url(format: "atom", topics: [topic.slug], departments: [organisation.slug], host: Whitehall.public_host, protocol: Whitehall.public_protocol)
+    atom_url = announcements_url(format: "atom", topics: [policy_area.slug], departments: [organisation.slug], host: Whitehall.public_host, protocol: Whitehall.public_protocol)
 
     assert_equal json["email_signup_url"], new_email_signups_path(email_signup: { feed: atom_url })
   end
