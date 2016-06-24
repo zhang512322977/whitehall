@@ -18,9 +18,9 @@ module Whitehall::DocumentFilter
       @include_world_location_news  = params[:include_world_location_news]
 
       if @params[:policy_areas].nil?
-        @topics = @params[:topics]
+        @policy_areas = @params[:topics]
       else
-        @topics = @params[:policy_areas]
+        @policy_areas = @params[:policy_areas]
       end
 
       @departments     = Array(@params[:departments])
@@ -46,8 +46,8 @@ module Whitehall::DocumentFilter
       raise NotImplementedError, 'you must provide #documents implementation in your filterer subclass'
     end
 
-    def selected_topics
-      find_by_slug(Classification, @topics)
+    def selected_policy_areas
+      find_by_slug(Classification, @policy_areas)
     end
 
     def selected_organisations

@@ -24,7 +24,7 @@ module Whitehall::DocumentFilter
       default_filter_args
         .merge(filter_by_keywords)
         .merge(filter_by_people)
-        .merge(filter_by_topics)
+        .merge(filter_by_policy_areas)
         .merge(filter_by_organisations)
         .merge(filter_by_locations)
         .merge(filter_by_date)
@@ -47,11 +47,9 @@ module Whitehall::DocumentFilter
       end
     end
 
-    # Note that "Topics" are called "Policy Areas" in Rummager. That's why we
-    # use `policy_areas` as the filter key here.
-    def filter_by_topics
-      if selected_topics.any?
-        { policy_areas: selected_topics.map(&:slug) }
+    def filter_by_policy_areas
+      if selected_policy_areas.any?
+        { policy_areas: selected_policy_areas.map(&:slug) }
       else
         {}
       end

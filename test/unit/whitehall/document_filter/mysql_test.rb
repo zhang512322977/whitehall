@@ -4,8 +4,8 @@ module Whitehall::DocumentFilter
   class MysqlTest < ActiveSupport::TestCase
     include DocumentFilterHelpers
 
-    test "#selected_topics returns an empty set by default" do
-      assert_equal [], Whitehall::DocumentFilter::Mysql.new.selected_topics
+    test "#selected_policy_areas returns an empty set by default" do
+      assert_equal [], Whitehall::DocumentFilter::Mysql.new.selected_policy_areas
     end
 
     test "#selected_organisations returns an empty set by default" do
@@ -27,7 +27,7 @@ module Whitehall::DocumentFilter
       assert_equal filtered_scope, filter.documents
     end
 
-    test "topics param sets #selected_topics" do
+    test "topics param sets #selected_policy_areas" do
       topic = stub_topic("car-tax")
 
       filtered_scope = stub_document_scope('filtered_scope')
@@ -35,7 +35,7 @@ module Whitehall::DocumentFilter
 
       filter = create_filter(document_scope, topics: [topic.slug])
 
-      assert_equal [topic], filter.selected_topics
+      assert_equal [topic], filter.selected_policy_areas
     end
 
     test "topics param does not filter if topics are not present" do
@@ -229,7 +229,7 @@ module Whitehall::DocumentFilter
         page: 2)
 
       assert_equal [organisation], filter.selected_organisations
-      assert_equal [topic], filter.selected_topics
+      assert_equal [topic], filter.selected_policy_areas
     end
 
     test "avoids loading the wrong document when combining topic and department filter" do

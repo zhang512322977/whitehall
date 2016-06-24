@@ -1,6 +1,6 @@
 module DocumentFilterHelper
-  def topic_filter_options(selected_topics = [])
-    selected_values = selected_topics.any? ? selected_topics.map(&:slug) : ["all"]
+  def topic_filter_options(selected_policy_areas = [])
+    selected_values = selected_policy_areas.any? ? selected_policy_areas.map(&:slug) : ["all"]
     options_for_select([filter_options.for(:topics).all], selected_values) +
     unsorted_grouped_options_for_select(filter_options.for(:topics).grouped, selected_values)
   end

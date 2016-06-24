@@ -16,7 +16,7 @@ module Whitehall::DocumentFilter
 
     def apply_filters
       filter_by_locale!
-      filter_by_topics!
+      filter_by_policy_areas!
       filter_by_departments!
       filter_by_keywords!
       filter_by_date!
@@ -34,9 +34,9 @@ module Whitehall::DocumentFilter
       @documents = @documents.with_translations(locale) if locale
     end
 
-    def filter_by_topics!
-      if selected_topics.any?
-        @documents = @documents.published_in_topic(selected_topics)
+    def filter_by_policy_areas!
+      if selected_policy_areas.any?
+        @documents = @documents.published_in_topic(selected_policy_areas)
       end
     end
 
