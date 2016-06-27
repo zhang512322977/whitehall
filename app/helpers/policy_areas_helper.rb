@@ -1,5 +1,4 @@
 module PolicyAreasHelper
-
   def array_of_links_to_topical_events(topical_events)
     topical_events.map { |topical_event|
       link_to topical_event.name, topical_event_path(topical_event), class: 'topical-event-link'
@@ -13,6 +12,7 @@ module PolicyAreasHelper
   end
 
   def topic_grid_size_class(*edition_scopes)
+    # rubocop:disable Performance/Count
     "grid-size-#{edition_scopes.compact.select(&:any?).length}"
   end
 end
