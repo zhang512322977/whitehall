@@ -4,7 +4,8 @@ class DetailedGuidesController < DocumentsController
   before_filter :set_analytics_format, only: [:show]
 
   def show
-    @topics = @document.topics
+    # FIXME: is this even used?
+    #@policy_areas = @document.topics
     @related_policies = document_related_policies
 
     set_meta_description(@document.summary)

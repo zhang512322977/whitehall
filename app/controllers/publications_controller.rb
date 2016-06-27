@@ -4,6 +4,13 @@ class PublicationsController < DocumentsController
   before_filter :redirect_statistics_filtering, only: [:index]
   before_filter :redirect_statistics_documents, only: [:show]
 
+  def params
+    new_params = super
+    policy_areas = new_params.delete("topics")
+    new_params["policy_areas"] = policy_areas unless policy_areas.nil?
+    new_params
+  end
+
   def index
     @filter = build_document_filter
     @filter.publications_search

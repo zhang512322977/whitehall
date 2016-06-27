@@ -33,14 +33,14 @@ class StatisticsControllerTest < ActionController::TestCase
     assert_cache_control("max-age=#{Whitehall.default_cache_max_age / 2}")
   end
 
-  view_test "#index highlights selected topic filter options" do
-    given_two_statistics_publications_in_two_topics
+  view_test "#index highlights selected policy_area filter options" do
+    given_two_statistics_publications_in_two_policy_areas
 
-    get :index, topics: [@topic_1, @topic_2]
+    get :index, topics: [@policy_area_1, @policy_area_2]
 
     assert_select "select#topics[name='topics[]']" do
-      assert_select "option[selected='selected']", text: @topic_1.name
-      assert_select "option[selected='selected']", text: @topic_2.name
+      assert_select "option[selected='selected']", text: @policy_area_1.name
+      assert_select "option[selected='selected']", text: @policy_area_2.name
     end
   end
 
@@ -55,10 +55,10 @@ class StatisticsControllerTest < ActionController::TestCase
     end
   end
 
-  def given_two_statistics_publications_in_two_topics
-    @topic_1, @topic_2 = create(:topic), create(:topic)
-    create(:published_statistics, topics: [@topic_1])
-    create(:published_national_statistics, topics: [@topic_2])
+  def given_two_statistics_publications_in_two_policy_areas
+    @policy_area_1, @policy_area_2 = create(:topic), create(:topic)
+    create(:published_statistics, topics: [@policy_area_1])
+    create(:published_national_statistics, topics: [@policy_area_2])
   end
 
   def given_two_statistics_publications_in_two_organisations

@@ -11,12 +11,12 @@ class LatestControllerTest < ActionController::TestCase
     assert_equal organisation, @controller.send(:subject)
   end
 
-  test 'GET :index should handle topics' do
-    topic = create(:topic)
+  test 'GET :index should handle policy_areas' do
+    policy_area = create(:topic)
 
-    get :index, topics: [topic]
+    get :index, topics: [policy_area]
 
-    assert_equal topic, @controller.send(:subject)
+    assert_equal policy_area, @controller.send(:subject)
   end
 
   test 'GET :index should handle topical events' do

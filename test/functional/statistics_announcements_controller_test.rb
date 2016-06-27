@@ -5,31 +5,31 @@ class StatisticsAnnouncementsControllerTest < ActionController::TestCase
 
   test "#index assign a StatisticsAnnouncementsFilter, populated with get params" do
     organisation = create :organisation
-    topic = create :topic
+    policy_area = create :topic
 
     get :index, keywords: "wombats",
                 from_date: "2050-02-02",
                 to_date: "2055-01-01",
                 organisations: [organisation.slug],
-                topics: [topic.slug]
+                topics: [policy_area.slug]
 
     assert assigns(:filter).is_a? Frontend::StatisticsAnnouncementsFilter
     assert_equal "wombats", assigns(:filter).keywords
     assert_equal Date.new(2050, 2, 2), assigns(:filter).from_date
     assert_equal Date.new(2055, 1, 1), assigns(:filter).to_date
     assert_equal [organisation], assigns(:filter).organisations
-    assert_equal [topic], assigns(:filter).topics
+    assert_equal [policy_area], assigns(:filter).topics
   end
 
   view_test "#index shows correct data for a statistics announcement" do
     Timecop.freeze(Time.local(2014)) do
       organisation = create :organisation, name: "Ministry of beards"
-      topic = create :topic, name: "Facial hair trends"
+      policy_area = create :topic, name: "Facial hair trends"
 
       announcement = create :statistics_announcement, title: "Average beard lengths 2015",
                                                       publication_type_id: PublicationType::NationalStatistics.id,
                                                       organisation_ids: [organisation.id],
-                                                      topics: [topic],
+                                                      topics: [policy_area],
                                                       current_release_date: build(:statistics_announcement_date,
                                                                                   release_date: Time.zone.parse("2050-01-01 09:30:00"),
                                                                                   precision: StatisticsAnnouncementDate::PRECISION[:exact],
@@ -38,7 +38,7 @@ class StatisticsAnnouncementsControllerTest < ActionController::TestCase
       old_announcement = create :statistics_announcement, title: "Average moustache lengths 2013",
                                                           publication_type_id: PublicationType::NationalStatistics.id,
                                                           organisation_ids: [organisation.id],
-                                                          topics: [topic],
+                                                          topics: [policy_area],
                                                           current_release_date: build(:statistics_announcement_date,
                                                                                       release_date: Time.zone.parse("2013-01-01 09:30:00"),
                                                                                       precision: StatisticsAnnouncementDate::PRECISION[:exact],
@@ -56,7 +56,7 @@ class StatisticsAnnouncementsControllerTest < ActionController::TestCase
       assert_string_includes "National Statistics", list_item.text
       assert_string_includes "1 January 2050 9:30am", list_item.text
       assert_has_link organisation.name, organisation_path(organisation), list_item
-      assert_has_link topic.name, topic_path(topic), list_item
+      assert_has_link policy_area.name, topic_path(policy_area), list_item
     end
   end
 

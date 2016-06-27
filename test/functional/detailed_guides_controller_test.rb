@@ -80,14 +80,14 @@ That's all
     @detailed_guide_in_organisation_2 = create(:published_detailed_guide, organisations: [@organisation_2])
   end
 
-  def given_two_detailed_guides_in_two_topics
-    @topic_1, @topic_2 = create(:topic), create(:topic)
-    @published_detailed_guide, @published_in_second_topic = create_detailed_guides_in(@topic_1, @topic_2)
+  def given_two_detailed_guides_in_two_policy_areas
+    @policy_area_1, @policy_area_2 = create(:topic), create(:topic)
+    @published_detailed_guide, @published_in_second_policy_area = create_detailed_guides_in(@policy_area_1, @policy_area_2)
   end
 
-  def create_detailed_guides_in(*topics)
-    topics.map do |topic|
-      create(:published_detailed_guide, topics: [topic])
+  def create_detailed_guides_in(*policy_areas)
+    policy_areas.map do |policy_area|
+      create(:published_detailed_guide, topics: [policy_area])
     end
   end
 end

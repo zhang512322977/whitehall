@@ -16,7 +16,10 @@ class StatisticsAnnouncementsController < PublicFacingController
 private
 
   def filter_params
-    params.slice(:page, :keywords, :from_date, :to_date, :organisations, :topics)
+    new_params = params.slice(:page, :keywords, :from_date, :to_date, :organisations, :topics)
+    policy_areas = new_params.delete("topics")
+    new_params["policy_areas"] = policy_areas unless policy_areas.nil?
+    new_params
   end
 
   def expire_cache_for_index_on_next_announcement_expiry(announcements)
