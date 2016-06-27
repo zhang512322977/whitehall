@@ -1,5 +1,5 @@
 # NB: Topic is being renamed to "Policy Area" across GOV.UK.
-class TopicsController < ClassificationsController
+class PolicyAreasController < ClassificationsController
   enable_request_formats show: :atom
 
   def show
@@ -30,7 +30,7 @@ class TopicsController < ClassificationsController
     end
   end
 
-  private
+private
 
   def set_cache_max_age
     @cache_max_age = 5.minutes

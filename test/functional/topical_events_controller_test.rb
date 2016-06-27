@@ -7,7 +7,7 @@ class TopicalEventsControllerTest < ActionController::TestCase
 
   test "#index redirects to topics homepage" do
     get :index
-    assert_redirected_to :topics
+    assert_redirected_to :policy_areas
   end
 
   test "#show displays primary featured editions in ordering defined by association" do

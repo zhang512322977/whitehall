@@ -1,6 +1,6 @@
 require "test_helper"
 
-class TopicsControllerTest < ActionController::TestCase
+class PolicyAreasControllerTest < ActionController::TestCase
   include FeedHelper
 
   should_be_a_public_facing_controller
@@ -133,9 +133,9 @@ class TopicsControllerTest < ActionController::TestCase
     get :show, id: policy_area
 
     assert_select "#recently-updated" do
-      assert_select_prefix_object publication_1, prefix = "recent"
-      assert_select_prefix_object publication_2, prefix = "recent"
-      assert_select_prefix_object news_article, prefix = "recent"
+      assert_select_prefix_object(publication_1, "recent")
+      assert_select_prefix_object(publication_2, "recent")
+      assert_select_prefix_object(news_article, "recent")
     end
 
     assert_select ".govdelivery[href='#{new_email_signups_path(email_signup: { feed: atom_feed_url_for(policy_area) })}']"
@@ -153,8 +153,8 @@ class TopicsControllerTest < ActionController::TestCase
       assert_select 'feed > title', 1
       assert_select 'feed > author, feed > entry > author'
       assert_select 'feed > updated', 1
-      assert_select 'feed > link[rel=?][type=?][href=?]', 'self', 'application/atom+xml', topic_url(policy_area, format: 'atom'), 1
-      assert_select 'feed > link[rel=?][type=?][href=?]', 'alternate', 'text/html', topic_url(policy_area), 1
+      assert_select 'feed > link[rel=?][type=?][href=?]', 'self', 'application/atom+xml', policy_area_url(policy_area, format: 'atom'), 1
+      assert_select 'feed > link[rel=?][type=?][href=?]', 'alternate', 'text/html', policy_area_url(policy_area), 1
 
       assert_select_atom_entries([publication])
     end

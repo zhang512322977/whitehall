@@ -13,7 +13,7 @@ class ConsultationsControllerTest < ActionController::TestCase
 
   test 'index redirects to the publications index filtering consultations, retaining any other filter params' do
     get :index, topics: ["a-policy-area-slug"], departments: ['an-org-slug']
-    assert_redirected_to publications_path(publication_filter_option: Whitehall::PublicationFilterOption::Consultation.slug, topics: ["a-policy-area-slug"], departments: ['an-org-slug'])
+    assert_redirected_to publications_path(publication_filter_option: Whitehall::PublicationFilterOption::Consultation.slug, policy_areas: ["a-policy-area-slug"], departments: ['an-org-slug'])
   end
 
   test 'show displays published consultations' do

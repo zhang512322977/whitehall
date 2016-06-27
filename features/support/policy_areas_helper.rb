@@ -1,4 +1,4 @@
-module TopicsHelper
+module PolicyAreasHelper
   def create_topic(options = {})
     start_creating_topic(options)
     save_document
@@ -16,4 +16,4 @@ module TopicsHelper
   end
 end
 
-World(TopicsHelper)
+World(PolicyAreasHelper)

@@ -6,7 +6,7 @@ module DocumentHelper
   include PolicyHelper
   include PolicyGroupsHelper
   include RoleAppointmentsHelper
-  include TopicsHelper
+  include PolicyAreasHelper
   include TranslationHelper
 
   def edition_page_title(edition)

@@ -75,13 +75,15 @@ That's all
   private
 
   def given_two_detailed_guides_in_two_organisations
-    @organisation_1, @organisation_2 = create(:organisation), create(:organisation)
+    @organisation_1 = create(:organisation)
+    @organisation_2 = create(:organisation)
     @detailed_guide_in_organisation_1 = create(:published_detailed_guide, organisations: [@organisation_1])
     @detailed_guide_in_organisation_2 = create(:published_detailed_guide, organisations: [@organisation_2])
   end
 
   def given_two_detailed_guides_in_two_policy_areas
-    @policy_area_1, @policy_area_2 = create(:topic), create(:topic)
+    @policy_area_1 = create(:topic)
+    @policy_area_2 = create(:topic)
     @published_detailed_guide, @published_in_second_policy_area = create_detailed_guides_in(@policy_area_1, @policy_area_2)
   end
 

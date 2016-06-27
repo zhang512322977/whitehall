@@ -34,7 +34,8 @@ module Whitehall
       maker = Whitehall::UrlMaker.new(host: 'gov.uk', format: 'atom')
       topic  = create(:topic)
 
-      assert_equal "http://gov.uk/government/topics/#{topic.slug}.atom", maker.url_for(topic)
+      # FIXME: url_for will work when model is renamed
+      assert_equal "http://gov.uk/government/topics/#{topic.slug}.atom", maker.policy_area_url(topic)
     end
   end
 end

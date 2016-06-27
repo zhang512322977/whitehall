@@ -1,10 +1,23 @@
 module ClassificationRoutesHelper
   def classification_path(classification, options = {})
-    polymorphic_path(classification_model_name(classification), options.merge(id: classification))
+    # FIXME:
+    # remove special case when model is renamed
+    model_name = classification_model_name(classification)
+
+    return policy_area_path(options.merge(id: classification)) if model_name == "topic"
+
+
+    polymorphic_path(model_name, options.merge(id: classification))
   end
 
   def classification_url(classification, options = {})
-    polymorphic_url(classification_model_name(classification), options.merge(id: classification))
+    # FIXME:
+    # remove special case when model is renamed
+    model_name = classification_model_name(classification)
+
+    return policy_area_url(options.merge(id: classification)) if model_name == "topic"
+
+    polymorphic_url(model_name, options.merge(id: classification))
   end
 
 private

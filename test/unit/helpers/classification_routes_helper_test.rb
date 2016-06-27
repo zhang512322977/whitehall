@@ -1,15 +1,23 @@
 require 'test_helper'
 
 class ClassificationRoutesHelperTest < ActionView::TestCase
-  [:topic, :topical_event].each do |type|
-    test "given a #{type} creates a #{type} path" do
-      classification = create(type)
-      assert_equal send("#{type}_path", classification), classification_path(classification)
-    end
+  test "given a topical event creates a topical event path" do
+    classification = create(:topical_event)
+    assert_equal send("topical_event_path", classification), classification_path(classification)
+  end
 
-    test "given a #{type} creates a #{type} url" do
-      classification = create(type)
-      assert_equal send("#{type}_url", classification), classification_url(classification)
-    end
+  test "given a topical event creates a topical event url" do
+    classification = create(:topical_event)
+    assert_equal send("topical_event_url", classification), classification_url(classification)
+  end
+
+  test "given a policy area creates a policy area path" do
+    classification = create(:topic)
+    assert_equal send("policy_area_path", classification), classification_path(classification)
+  end
+
+  test "given a policy area creates a policy area url" do
+    classification = create(:topic)
+    assert_equal send("policy_area_url", classification), classification_url(classification)
   end
 end

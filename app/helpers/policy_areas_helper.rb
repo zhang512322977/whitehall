@@ -1,4 +1,4 @@
-module TopicsHelper
+module PolicyAreasHelper
 
   def array_of_links_to_topical_events(topical_events)
     topical_events.map { |topical_event|

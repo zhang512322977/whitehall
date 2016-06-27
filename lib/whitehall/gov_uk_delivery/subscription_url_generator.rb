@@ -9,7 +9,7 @@ module Whitehall
         [
           filter_urls,
           people_and_role_urls,
-          topic_urls,
+          policy_area_urls,
           topical_event_urls,
           world_location_urls,
           organisation_urls,
@@ -104,7 +104,7 @@ module Whitehall
           .map { |c| c.inject({}) { |h, a| h.merge(a) } }
       end
 
-      def topic_slugs
+      def policy_area_slugs
         edition.can_be_associated_with_topics? ? edition.topics.map(&:slug) : []
       end
 
@@ -120,8 +120,8 @@ module Whitehall
         edition.world_locations.map(&:slug)
       end
 
-      def topic_urls
-        generate_urls(url_maker.method(:topic_url), topic_slugs)
+      def policy_area_urls
+        generate_urls(url_maker.method(:policy_area_url), policy_area_slugs)
       end
 
       def topical_event_urls
@@ -137,9 +137,9 @@ module Whitehall
       end
 
       def filter_urls
-        department_and_topic_combos = [department_slugs, topic_slugs].inject(&:product)
-        department_and_topic_combos.map do |(org, topic)|
-          combinatorial_args = [{departments: [org]}, {topics: [topic]}]
+        department_and_policy_area_combos = [department_slugs, policy_area_slugs].inject(&:product)
+        department_and_policy_area_combos.map do |(org, policy_area)|
+          combinatorial_args = [{departments: [org]}, {topics: [policy_area]}]
           combinatorial_args << filter_option if filter_option
           combinatorial_args << { relevant_to_local_government: 1 } if relevant_to_local_government?
 

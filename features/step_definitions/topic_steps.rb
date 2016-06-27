@@ -70,17 +70,19 @@ When /^I edit the topic "([^"]*)" to have description "([^"]*)"$/ do |name, desc
 end
 
 When /^I visit the list of topics$/ do
-  visit topics_path
+  visit policy_areas_path
 end
 
 When /^I visit the "([^"]*)" (topic|topical event)$/ do |name, type|
-  classification = if type == 'topic'
-    Topic.find_by!(name: name)
+  path = if type == 'topic'
+    policy_area = Topic.find_by!(name: name)
+    policy_area_path(policy_area)
   else
-    TopicalEvent.find_by!(name: name)
+    topical_event = TopicalEvent.find_by!(name: name)
+    topical_event_path(topical_event)
   end
 
-  visit polymorphic_path(classification)
+  visit path
 end
 
 When /^I set the order of the policies in the "([^"]*)" topic to:$/ do |name, table|
@@ -131,7 +133,7 @@ end
 
 Then /^I should see the order of the policies in the "([^"]*)" topic is:$/ do |name, expected_table|
   topic = Topic.find_by!(name: name)
-  visit topic_path(topic)
+  visit policy_area_path(topic)
   rows = find("#policies").all('h2')
   table = rows.map { |r| r.all('a').map { |c| c.text.strip } }
   expected_table.diff!(table)
@@ -162,7 +164,7 @@ end
 
 Then /^I should see a link to the related topic "([^"]*)"$/ do |related_name|
   related_topic = Topic.find_by(name: related_name)
-  assert page.has_css?(".related-topics a[href='#{topic_path(related_topic)}']", text: related_name)
+  assert page.has_css?(".related-topics a[href='#{policy_area_path(related_topic)}']", text: related_name)
 end
 
 When(/^I feature the publication "([^"]*)" on the topic "([^"]*)"$/) do |publication_name, topic_name|
@@ -207,7 +209,7 @@ Then(/^I should see the publication "([^"]*)" featured on the public topic page 
   publication = Publication.find_by!(title: publication_name)
   topic = Topic.find_by!(name: topic_name)
 
-  visit topic_path(topic)
+  visit policy_area_path(topic)
 
   within('section.featured-news') do
     assert page.has_content?(publication.title)
@@ -215,7 +217,7 @@ Then(/^I should see the publication "([^"]*)" featured on the public topic page 
 end
 
 Then(/^I should see the offsite link featured on the public topic page$/) do
-  visit topic_path(@topic)
+  visit policy_area_path(@topic)
   within('section.featured-news') do
     assert page.has_content?(@offsite_link.title)
   end
@@ -233,7 +235,7 @@ When /^I add some featured links to the topic "([^"]*)" via the admin$/ do |topi
 end
 
 Then /^the featured links for the topic "([^"]*)" should be visible on the public site$/ do |topic_name|
-  visit_topic topic_name
+  visit_policy_area topic_name
   within ".featured-links" do
     assert page.has_css?("a[href='https://www.gov.uk/mainstream/tool-alpha']", "Tool Alpha")
   end

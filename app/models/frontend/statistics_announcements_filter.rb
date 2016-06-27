@@ -2,7 +2,7 @@ class Frontend::StatisticsAnnouncementsFilter < FormObject
   named "StatisticsAnnouncementsFilter"
   attr_accessor :keywords,
                 :from_date, :to_date,
-                :organisations, :topics,
+                :organisations, :policy_areas
                 :page
 
   RESULTS_PER_PAGE = 40
@@ -51,18 +51,12 @@ class Frontend::StatisticsAnnouncementsFilter < FormObject
     organisations.map &:slug
   end
 
-  def topics=(topics)
-    @topics = Topic.where(slug: Array(topics))
+  def policy_areas=(policy_areas)
+    @policy_areas = Topic.where(slug: Array(policy_areas))
   end
 
-  def topics
-    Array(@topics)
-  end
-
-  # Policy areas used to be named topics.
-  # Elsewhere we use "topic" to refer to specialist sectors.
   def policy_areas
-    topics
+    Array(@policy_areas)
   end
 
   def policy_area_slugs

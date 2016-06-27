@@ -18,7 +18,7 @@ class StatisticsAnnouncementsControllerTest < ActionController::TestCase
     assert_equal Date.new(2050, 2, 2), assigns(:filter).from_date
     assert_equal Date.new(2055, 1, 1), assigns(:filter).to_date
     assert_equal [organisation], assigns(:filter).organisations
-    assert_equal [policy_area], assigns(:filter).topics
+    assert_equal [policy_area], assigns(:filter).policy_areas
   end
 
   view_test "#index shows correct data for a statistics announcement" do
@@ -56,7 +56,7 @@ class StatisticsAnnouncementsControllerTest < ActionController::TestCase
       assert_string_includes "National Statistics", list_item.text
       assert_string_includes "1 January 2050 9:30am", list_item.text
       assert_has_link organisation.name, organisation_path(organisation), list_item
-      assert_has_link policy_area.name, topic_path(policy_area), list_item
+      assert_has_link policy_area.name, policy_area_path(policy_area), list_item
     end
   end
 

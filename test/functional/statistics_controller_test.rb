@@ -56,7 +56,8 @@ class StatisticsControllerTest < ActionController::TestCase
   end
 
   def given_two_statistics_publications_in_two_policy_areas
-    @policy_area_1, @policy_area_2 = create(:topic), create(:topic)
+    @policy_area_1 = create(:topic)
+    @policy_area_2 = create(:topic)
     create(:published_statistics, topics: [@policy_area_1])
     create(:published_national_statistics, topics: [@policy_area_2])
   end

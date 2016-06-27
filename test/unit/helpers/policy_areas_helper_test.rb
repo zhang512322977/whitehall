@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TopicsHelperTest < ActionView::TestCase
+class PolicyAreasHelperTest < ActionView::TestCase
   test 'classification_contents_breakdown generates a sentence that ends with the number of published detailed guides belonging to the classification' do
     t = create(:topic)
 

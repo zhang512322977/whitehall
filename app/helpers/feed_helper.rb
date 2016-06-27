@@ -1,6 +1,13 @@
 module FeedHelper
 
   def atom_feed_url_for(resource)
+    # FIXME:
+    # remove special case when model is renamed
+    if resource.is_a?(Topic)
+      return Whitehall.atom_feed_maker.url_for(controller: "policy_areas", action: "show", id: resource)
+    end
+
+
     Whitehall.atom_feed_maker.url_for(resource)
   end
 

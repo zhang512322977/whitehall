@@ -45,41 +45,41 @@ class Frontend::StatisticsAnnouncementsFilterTest < ActiveSupport::TestCase
     assert_equal [organisation.slug], build(organisations: [organisation.slug]).organisation_slugs
   end
 
-  test "topics= parses slugs into real topics" do
-    topic_1, topic_2 = 2.times.map { create(:topic) }
-    assert_equal [topic_1, topic_2], build(topics: [topic_1.slug, topic_2.slug]).topics
+  test "policy_areas= parses slugs into real policy_areas" do
+    policy_area_1, policy_area_2 = 2.times.map { create(:topic) }
+    assert_equal [policy_area_1, policy_area_2], build(policy_areas: [policy_area_1.slug, policy_area_2.slug]).policy_areas
   end
 
-  test "topics= handles nil" do
-    assert_equal [], build(topics: nil).topics
+  test "policy_areas= handles nil" do
+    assert_equal [], build(policy_areas: nil).policy_areas
   end
 
-  test "topics= ignores any shenanigans" do
-    filter = build(topics: [{ hax: '1'}])
-    assert_equal [], filter.topics
+  test "policy_areas= ignores any shenanigans" do
+    filter = build(policy_areas: [{ hax: '1'}])
+    assert_equal [], filter.policy_areas
   end
 
-  test "policy_area_slugs returns slugs of topics" do
-    topic = create(:topic)
-    assert_equal [topic.slug], build(topics: [topic.slug]).policy_area_slugs
+  test "policy_area_slugs returns slugs of policy_areas" do
+    policy_area = create(:topic)
+    assert_equal [policy_area.slug], build(policy_areas: [policy_area.slug]).policy_area_slugs
   end
 
   test "#valid_filter_params returns all attributes if all are present and valid excluding pagination parameters" do
     organisation = create :organisation
-    topic = create :topic
+    policy_area = create :topic
 
     filter = build(keywords: "keyword",
                    from_date: "2020-01-01",
                    to_date: "2020-02-01",
                    organisations: [organisation.slug],
-                   topics: [topic.slug],
+                   policy_areas: [policy_area.slug],
                    page: 2)
 
     assert_equal({ keywords: "keyword",
                    from_date: Date.new(2020, 1, 1),
                    to_date: Date.new(2020, 2, 1),
                    organisations: [organisation.slug],
-                   policy_areas: [topic.slug],
+                   policy_areas: [policy_area.slug],
                  }, filter.valid_filter_params)
   end
 
@@ -88,7 +88,7 @@ class Frontend::StatisticsAnnouncementsFilterTest < ActiveSupport::TestCase
     refute build(from_date: nil).valid_filter_params.keys.include? :from_date
     refute build(to_date: nil).valid_filter_params.keys.include? :to_date
     refute build(organisations: []).valid_filter_params.keys.include? :organisations
-    refute build(topics: []).valid_filter_params.keys.include? :topics
+    refute build(policy_areas: []).valid_filter_params.keys.include? :policy_areas
   end
 
   test "#results should ask the provider for results, using #valid_filter_params + pagination params as search terms" do

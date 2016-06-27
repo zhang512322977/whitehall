@@ -111,7 +111,7 @@ class Classification < ActiveRecord::Base
   end
 
   def search_link
-    Whitehall.url_maker.topic_path(slug)
+    Whitehall.url_maker.policy_area_path(slug)
   end
 
   def latest(limit = 3)
