@@ -22,7 +22,7 @@ module Admin::TaggableContentHelper
   # topic.
   def taggable_topics_container
     Rails.cache.fetch(taggable_topics_cache_digest, expires_in: 1.day) do
-      Topic.order(:name).map { |t| [t.name, t.id] }
+      PolicyArea.order(:name).map { |t| [t.name, t.id] }
     end
   end
 
@@ -139,7 +139,7 @@ module Admin::TaggableContentHelper
   # Returns an MD5 digest representing the current set of taggable topics. This
   # will change if any of the Topics should change or if a new topic is added.
   def taggable_topics_cache_digest
-    @_taggable_topics_cache_digest ||= calculate_digest(Topic.order(:id), 'topics')
+    @_taggable_topics_cache_digest ||= calculate_digest(PolicyArea.order(:id), 'topics')
   end
 
   # Returns an MD5 digest representing the current set of taggable topical

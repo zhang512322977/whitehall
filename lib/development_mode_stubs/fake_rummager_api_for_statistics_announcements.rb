@@ -11,7 +11,7 @@ module DevelopmentModeStubs
         scope = scope.in_organisations(organisation_ids)
       end
       if params[:policy_areas].present?
-        topic_ids = Topic.where(slug: params[:policy_areas]).pluck(:id)
+        topic_ids = PolicyArea.where(slug: params[:policy_areas]).pluck(:id)
         scope = scope.with_topics(topic_ids)
       end
       if params[:release_timestamp].present?

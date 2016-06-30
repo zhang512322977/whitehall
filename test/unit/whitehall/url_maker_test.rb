@@ -32,7 +32,7 @@ module Whitehall
 
     test 'the default format can be overridden for a non-localised resource' do
       maker = Whitehall::UrlMaker.new(host: 'gov.uk', format: 'atom')
-      topic  = create(:topic)
+      topic  = create(:policy_area)
 
       # FIXME: url_for will work when model is renamed
       assert_equal "http://gov.uk/government/topics/#{topic.slug}.atom", maker.policy_area_url(topic)

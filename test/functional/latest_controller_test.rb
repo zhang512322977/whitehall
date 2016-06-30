@@ -12,7 +12,7 @@ class LatestControllerTest < ActionController::TestCase
   end
 
   test 'GET :index should handle policy_areas' do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
 
     get :index, topics: [policy_area]
 

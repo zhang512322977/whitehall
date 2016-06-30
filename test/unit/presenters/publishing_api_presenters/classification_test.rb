@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PublishingApiPresenters::ClassificationTest < ActiveSupport::TestCase
   test "presents a valid placeholder 'topic' content item" do
-    topic = create(:topic, name: "Defence and armed forces")
+    topic = create(:policy_area, name: "Defence and armed forces")
     public_path = "/government/topics/defence-and-armed-forces"
 
     expected = {

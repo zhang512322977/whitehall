@@ -62,8 +62,8 @@ When(/^I should only see statistics matching the given keyword, from date and to
 end
 
 Given(/^there are some statisics for various departments and topics$/) do
-  beard_topic = create(:topic, name: 'Beards')
-  wombat_topic = create(:topic, name: 'Wombats')
+  beard_topic = create(:policy_area, name: 'Beards')
+  wombat_topic = create(:policy_area, name: 'Wombats')
 
   beard_org = create(:ministerial_department, name: 'Ministry of Beards')
   wombat_org = create(:ministerial_department, name: 'Wombats of Wimbledon')

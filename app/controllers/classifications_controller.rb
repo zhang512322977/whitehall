@@ -4,7 +4,7 @@ class ClassificationsController < PublicFacingController
   include CacheControlHelper
 
   def index
-    @topics = Topic.alphabetical
+    @topics = PolicyArea.alphabetical
     @topical_events = TopicalEvent.active.alphabetical
   end
 end

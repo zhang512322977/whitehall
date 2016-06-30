@@ -54,6 +54,6 @@ module CsvSampleHelpers
   end
 
   def sample_topic
-    @sample_topic ||= (Topic.first || create(:topic))
+    @sample_topic ||= (PolicyArea.first || create(:policy_area))
   end
 end

@@ -95,7 +95,7 @@ class DevelopmentModeStubs::FakeRummagerApiForStatisticsAnnouncementsTest < Acti
   end
 
   test "#advanced_search with topics returns results associated with the topics" do
-    topic = create(:topic, name: 'A topic')
+    topic = create(:policy_area, name: 'A topic')
     announcement_1 = create :statistics_announcement, topics: [topic]
     announcement_2 = create :statistics_announcement
 

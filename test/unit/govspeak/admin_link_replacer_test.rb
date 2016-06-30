@@ -48,7 +48,7 @@ module Govspeak
     end
 
     test 'replaces other types of admin links with plain text' do
-      topic    = create(:topic)
+      topic    = create(:policy_area)
       fragment = govspeak_to_nokogiri_fragment("Here is an [admin link that should not link](/government/admin/topics/#{topic.id})")
 
       AdminLinkReplacer.new(fragment).replace!

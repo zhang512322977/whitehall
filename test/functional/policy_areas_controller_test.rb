@@ -9,7 +9,7 @@ class PolicyAreasControllerTest < ActionController::TestCase
     organisation_1 = create(:organisation)
     organisation_2 = create(:organisation)
     publication = create(:draft_publication, :scheduled)
-    policy_area = create(:topic, editions: [publication, create(:published_news_article)])
+    policy_area = create(:policy_area, editions: [publication, create(:published_news_article)])
     policy_area.organisations << organisation_1
     policy_area.organisations << organisation_2
 
@@ -25,7 +25,7 @@ class PolicyAreasControllerTest < ActionController::TestCase
   end
 
   view_test "GET :show lists published publications and links to more" do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     published = []
     4.times do |i|
       published << create(:published_publication, {
@@ -46,7 +46,7 @@ class PolicyAreasControllerTest < ActionController::TestCase
   end
 
   view_test "GET :show lists published consultations and links to more" do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     published = []
     4.times do |i|
       published << create(:published_consultation, {
@@ -65,7 +65,7 @@ class PolicyAreasControllerTest < ActionController::TestCase
   end
 
   view_test "GET :show lists published statistical publications and links to more" do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     published = []
     4.times do |i|
       published << create(:published_statistics, {
@@ -84,7 +84,7 @@ class PolicyAreasControllerTest < ActionController::TestCase
   end
 
   view_test "GET :show lists published announcements and links to more" do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     published = []
     4.times do |i|
       published << create(:published_news_article, {
@@ -109,7 +109,7 @@ class PolicyAreasControllerTest < ActionController::TestCase
     6.times do |i|
       published_detailed_guides << create(:published_detailed_guide, title: "detailed-guide-title-#{i}")
     end
-    policy_area = create(:topic, editions: published_detailed_guides)
+    policy_area = create(:policy_area, editions: published_detailed_guides)
 
     get :show, id: policy_area
 
@@ -124,10 +124,10 @@ class PolicyAreasControllerTest < ActionController::TestCase
   end
 
   view_test "GET :show displays latest documents relating to the policy_area, including atom feed and govdelivery links" do
-    policy_area = create(:topic)
-    publication_1 = create(:published_publication, topics: [policy_area])
-    news_article = create(:published_news_article, topics: [policy_area])
-    publication_2 = create(:published_publication, topics: [policy_area])
+    policy_area = create(:policy_area)
+    publication_1 = create(:published_publication, policy_areas: [policy_area])
+    news_article = create(:published_news_article, policy_areas: [policy_area])
+    publication_2 = create(:published_publication, policy_areas: [policy_area])
     create(:classification_featuring, classification: policy_area, edition: publication_1)
 
     get :show, id: policy_area
@@ -143,8 +143,8 @@ class PolicyAreasControllerTest < ActionController::TestCase
   end
 
   view_test 'GET :show for atom feed has the right elements' do
-    policy_area = create(:topic)
-    publication = create(:published_publication, topics: [policy_area])
+    policy_area = create(:policy_area)
+    publication = create(:published_publication, policy_areas: [policy_area])
 
     get :show, id: policy_area, format: :atom
 
@@ -161,15 +161,15 @@ class PolicyAreasControllerTest < ActionController::TestCase
   end
 
   test 'GET :show has a 5 minute expiry time' do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     get :show, id: policy_area
 
     assert_cache_control("max-age=#{5.minutes}")
   end
 
   test 'GET :show caps max expiry to 5 minute when there are future scheduled editions' do
-    policy_area = create(:topic)
-    create(:scheduled_publication, scheduled_publication: 1.day.from_now, topics: [policy_area])
+    policy_area = create(:policy_area)
+    create(:scheduled_publication, scheduled_publication: 1.day.from_now, policy_areas: [policy_area])
 
     get :show, id: policy_area
 
@@ -178,7 +178,7 @@ class PolicyAreasControllerTest < ActionController::TestCase
 
   test 'GET :show sets analytics organisation headers' do
     organisation = create(:organisation)
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     policy_area.organisations << organisation
 
     get :show, id: policy_area

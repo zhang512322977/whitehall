@@ -16,7 +16,7 @@ private
       PublishingApiPresenters::WorkingGroup
     when TakePartPage
       PublishingApiPresenters::TakePart
-    when Topic
+    when PolicyArea
       PublishingApiPresenters::PolicyAreaPlaceholder
     when ::Organisation
       PublishingApiPresenters::Organisation

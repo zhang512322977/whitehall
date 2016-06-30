@@ -828,8 +828,8 @@ module AdminEditionControllerTestHelpers
       end
 
       test "create should associate topics with the edition" do
-        first_topic = create(:topic)
-        second_topic = create(:topic)
+        first_topic = create(:policy_area)
+        second_topic = create(:policy_area)
         attributes = controller_attributes_for(edition_type)
 
         post :create, edition: attributes.merge(
@@ -851,10 +851,10 @@ module AdminEditionControllerTestHelpers
       end
 
       test "update should associate topics with the edition" do
-        first_topic = create(:topic)
-        second_topic = create(:topic)
+        first_topic = create(:policy_area)
+        second_topic = create(:policy_area)
 
-        edition = create("draft_#{edition_type}", topics: [first_topic])
+        edition = create("draft_#{edition_type}", policy_areas: [first_topic])
 
         put :update, id: edition, edition: {
           topic_ids: [second_topic.id]
@@ -865,8 +865,8 @@ module AdminEditionControllerTestHelpers
       end
 
       view_test "updating a stale document should render edit page with conflicting document and its related topics" do
-        topic = create(:topic)
-        edition = create(edition_type, topics: [topic])
+        topic = create(:policy_area)
+        edition = create(edition_type, policy_areas: [topic])
         lock_version = edition.lock_version
         edition.touch
 

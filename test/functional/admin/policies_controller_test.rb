@@ -6,7 +6,7 @@ class Admin::PoliciesControllerTest < ActionController::TestCase
   end
 
   view_test "topics returns list of the policy's topics when JSON requested" do
-    topics = [create(:topic), create(:topic)]
+    topics = [create(:policy_area), create(:policy_area)]
     policy_content_id = 'asfd-asdf-asdf-asdf'
     create(:classification_policy, policy_content_id: policy_content_id, classification: topics.first)
     create(:classification_policy, policy_content_id: policy_content_id, classification: topics.second)

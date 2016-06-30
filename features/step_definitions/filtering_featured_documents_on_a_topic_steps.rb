@@ -1,5 +1,5 @@
 Given(/^there is a topic with published documents$/) do
-  @topic = create(:topic, name: "A Topic")
+  @topic = create(:policy_area, name: "A PolicyArea")
   department = create(:ministerial_department, name: "A Department")
 
   create(:published_publication, title: "Publication #1", topics: [@topic])

@@ -1,4 +1,4 @@
-# Note that "Policy Area" is the new name for "Topic".
+# Note that "Policy Area" is the new name for "PolicyArea".
 class PublishingApiPresenters::PolicyAreaPlaceholder < PublishingApiPresenters::Placeholder
   def links
     extract_links([

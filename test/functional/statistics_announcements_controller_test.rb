@@ -5,7 +5,7 @@ class StatisticsAnnouncementsControllerTest < ActionController::TestCase
 
   test "#index assign a StatisticsAnnouncementsFilter, populated with get params" do
     organisation = create :organisation
-    policy_area = create :topic
+    policy_area = create :policy_area
 
     get :index, keywords: "wombats",
                 from_date: "2050-02-02",
@@ -24,7 +24,7 @@ class StatisticsAnnouncementsControllerTest < ActionController::TestCase
   view_test "#index shows correct data for a statistics announcement" do
     Timecop.freeze(Time.local(2014)) do
       organisation = create :organisation, name: "Ministry of beards"
-      policy_area = create :topic, name: "Facial hair trends"
+      policy_area = create :policy_area, name: "Facial hair trends"
 
       announcement = create :statistics_announcement, title: "Average beard lengths 2015",
                                                       publication_type_id: PublicationType::NationalStatistics.id,

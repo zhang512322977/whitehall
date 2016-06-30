@@ -1,4 +1,4 @@
-Feature: Filtering Featured Documents On A Topic
+Feature: Filtering Featured Documents On A PolicyArea
 
   Background:
     Given there is a topic with published documents

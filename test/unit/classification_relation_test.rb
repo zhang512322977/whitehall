@@ -21,21 +21,21 @@ class ClassificationRelationTest < ActiveSupport::TestCase
   end
 
   test "should be valid if one topic is related to two others" do
-    topic = create(:topic)
+    topic = create(:policy_area)
     existing_relation = create(:classification_relation, topic: topic)
     relation = build(:classification_relation, topic: topic)
     assert relation.valid?
   end
 
   test "should be valid if one topic is related from two others" do
-    topic = create(:topic)
+    topic = create(:policy_area)
     existing_relation = create(:classification_relation, related_topic: topic)
     relation = build(:classification_relation, related_topic: topic)
     assert relation.valid?
   end
 
   test "should be invalid if a topic is related to itself" do
-    topic = create(:topic)
+    topic = create(:policy_area)
     relation = build(:classification_relation, topic: topic, related_topic: topic)
     refute relation.valid?
     assert relation.errors[:classification].include?("cannot relate to itself"), relation.errors.full_messages.join(", ")

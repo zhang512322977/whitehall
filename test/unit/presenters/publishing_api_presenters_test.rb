@@ -79,8 +79,8 @@ class PublishingApiPresentersTest < ActiveSupport::TestCase
     assert_equal PublishingApiPresenters::TopicalEvent, presenter.class
   end
 
-  test ".presenter_for returns a special-case presenter for `Topic`" do
-    presenter = PublishingApiPresenters.presenter_for(Topic.new)
+  test ".presenter_for returns a special-case presenter for `PolicyArea`" do
+    presenter = PublishingApiPresenters.presenter_for(PolicyArea.new)
     assert_equal PublishingApiPresenters::PolicyAreaPlaceholder, presenter.class
   end
 

@@ -3,7 +3,7 @@ require "test_helper"
 class Admin::DocumentCollectionsControllerTest < ActionController::TestCase
   setup do
     @organisation = create(:organisation)
-    @topic = create(:topic)
+    @topic = create(:policy_area)
 
     @user = create(:writer)
     login_as @user

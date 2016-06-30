@@ -358,7 +358,7 @@ class PublicationsControllerTest < ActionController::TestCase
   end
 
   view_test "#index requested as JSON includes URL to the atom feed including any filters" do
-    create(:topic, name: "topic-1")
+    create(:policy_area, name: "topic-1")
     create(:organisation, name: "organisation-1")
 
     get :index, format: :json, topics: ["topic-1"], departments: ["organisation-1"]
@@ -369,7 +369,7 @@ class PublicationsControllerTest < ActionController::TestCase
   end
 
   view_test "#index requested as JSON includes atom feed URL without date parameters" do
-    create(:topic, name: "topic-1")
+    create(:policy_area, name: "topic-1")
 
     get :index, format: :json, from_date: "2012-01-01", topics: ["topic-1"]
 
@@ -389,7 +389,7 @@ class PublicationsControllerTest < ActionController::TestCase
   end
 
   view_test "#index requested as JSON includes email signup path with organisation and topic parameters" do
-    topic = create(:topic)
+    topic = create(:policy_area)
     organisation = create(:organisation)
 
     get :index, format: :json, from_date: "2012-01-01", topics: [topic.slug], departments: [organisation.slug]
@@ -406,7 +406,7 @@ class PublicationsControllerTest < ActionController::TestCase
   end
 
   view_test '#index atom feed autodiscovery link includes any present filters' do
-    topic = create(:topic)
+    topic = create(:policy_area)
     organisation = create(:organisation)
 
     get :index, topics: [topic], departments: [organisation]
@@ -415,7 +415,7 @@ class PublicationsControllerTest < ActionController::TestCase
   end
 
   view_test '#index atom feed autodiscovery link does not include date filter' do
-    topic = create(:topic)
+    topic = create(:policy_area)
 
     get :index, topics: [topic], to_date: "2012-01-01"
 
@@ -423,7 +423,7 @@ class PublicationsControllerTest < ActionController::TestCase
   end
 
   view_test '#index shows a link to the atom feed including any present filters' do
-    topic = create(:topic)
+    topic = create(:policy_area)
     organisation = create(:organisation)
 
     get :index, topics: [topic], departments: [organisation]
@@ -732,13 +732,13 @@ class PublicationsControllerTest < ActionController::TestCase
   end
 
   def given_two_documents_in_two_topics
-    @topic_1, @topic_2 = create(:topic), create(:topic)
-    create(:published_publication, topics: [@topic_1])
-    create(:published_consultation, topics: [@topic_2])
+    @topic_1, @topic_2 = create(:policy_area), create(:policy_area)
+    create(:published_publication, policy_areas: [@topic_1])
+    create(:published_consultation, policy_areas: [@topic_2])
   end
 
   def create_publications_in(*topics)
-    create(:published_publication, topics: [topics])
+    create(:published_publication, policy_areas: [topics])
   end
 
 end

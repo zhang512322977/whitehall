@@ -10,9 +10,9 @@ class Admin::TopicsControllerTest < ActionController::TestCase
   ### Describing :index ###
 
   view_test "GET :index lists the topical events in alphabetial order" do
-    topic_c = create(:topic, name: "Topic C")
-    topic_a = create(:topic, name: "Topic A")
-    topic_b = create(:topic, name: "Topic B")
+    topic_c = create(:policy_area, name: "PolicyArea C")
+    topic_a = create(:policy_area, name: "PolicyArea A")
+    topic_b = create(:policy_area, name: "PolicyArea B")
 
     get :index
 
@@ -23,7 +23,7 @@ class Admin::TopicsControllerTest < ActionController::TestCase
   ### Describing :show ###
 
   view_test "GET :show lists the topic's details" do
-    topic = create(:topic)
+    topic = create(:policy_area)
     get :show, id: topic
 
     assert_response :success
@@ -40,8 +40,8 @@ class Admin::TopicsControllerTest < ActionController::TestCase
   ### Describing :create ###
 
   test "POST :create creates a new topic" do
-    first_topic = create(:topic)
-    second_topic = create(:topic)
+    first_topic = create(:policy_area)
+    second_topic = create(:policy_area)
     attributes = attributes_for(:topic)
 
     post :create, topic: attributes.merge(
@@ -50,7 +50,7 @@ class Admin::TopicsControllerTest < ActionController::TestCase
 
     assert_response :redirect
 
-    assert topic = Topic.last
+    assert topic = PolicyArea.last
     assert_equal attributes[:name], topic.name
     assert_equal attributes[:description], topic.description
     assert_equal [first_topic].to_set, topic.related_classifications.to_set
@@ -66,7 +66,7 @@ class Admin::TopicsControllerTest < ActionController::TestCase
   ### Describing :edit ###
 
   view_test "GET :edit renders the edit form" do
-    topic = create(:topic)
+    topic = create(:policy_area)
     get :edit, id: topic
 
     assert_response :success
@@ -76,7 +76,7 @@ class Admin::TopicsControllerTest < ActionController::TestCase
   ### Describing :update ###
 
   test "PUT :update saves changes to the topic and redirects" do
-    topic = create(:topic)
+    topic = create(:policy_area)
 
     put :update, id: topic, topic: {
       name: "new-name",
@@ -89,7 +89,7 @@ class Admin::TopicsControllerTest < ActionController::TestCase
   end
 
   view_test "PUT :update with bad data renders errors" do
-    topic = create(:topic, name: 'topic')
+    topic = create(:policy_area, name: 'topic')
     put :update, id: topic.id, topic: {name: "Blah", description: ""}
 
     assert_equal 'topic', topic.reload.name
@@ -97,8 +97,8 @@ class Admin::TopicsControllerTest < ActionController::TestCase
   end
 
   test "PUT :update re-orders editions" do
-    topic = create(:topic)
-    publication = create(:publication, topics: [topic])
+    topic = create(:policy_area)
+    publication = create(:publication, policy_areas: [topic])
     association = topic.classification_memberships.first
 
     put :update, id: topic.id, topic: {name: "Blah", description: "Blah", classification_memberships_attributes: {
@@ -111,7 +111,7 @@ class Admin::TopicsControllerTest < ActionController::TestCase
   ### Describing :destroy ###
 
   test "DELETE :destroy deletes a deletable topic" do
-    topic = create(:topic)
+    topic = create(:policy_area)
     delete :destroy, id: topic.id
 
     assert_response :redirect
@@ -119,7 +119,7 @@ class Admin::TopicsControllerTest < ActionController::TestCase
   end
 
   test "DELETE :destroy does not delete topics with associated content" do
-    topic = create(:topic, policy_content_ids: [policy_1["content_id"]])
+    topic = create(:policy_area, policy_content_ids: [policy_1["content_id"]])
 
     delete :destroy, id: topic
     assert_equal "Cannot destroy Policy area with associated content", flash[:alert]

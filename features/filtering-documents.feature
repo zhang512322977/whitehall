@@ -6,7 +6,7 @@ Feature: Filtering Documents
   - Publications (inc. Consultations & Statistics):
     - Keyword
     - Publication type
-    - Topic
+    - PolicyArea
     - Department
     - Official document status
     - World locations
@@ -14,13 +14,13 @@ Feature: Filtering Documents
 
   - Policies
     - Keyword
-    - Topic
+    - PolicyArea
     - Department
 
   - Announcements
     - Keyword
     - Announcement type
-    - Topic
+    - PolicyArea
     - Department
     - World Location
     - Published date

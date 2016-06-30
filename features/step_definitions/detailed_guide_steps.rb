@@ -2,7 +2,7 @@ Given /^a published detailed guide "([^"]*)" related to published detailed guide
   create(:government)
   first_related = create(:published_detailed_guide, title: first_related_title)
   second_related = create(:published_detailed_guide, title: second_related_title)
-  guide = create(:published_detailed_guide, title: title, related_documents: [first_related.document, second_related.document], topics: [create(:topic)])
+  guide = create(:published_detailed_guide, title: title, related_documents: [first_related.document, second_related.document], topics: [create(:policy_area)])
 end
 
 Given /^a published detailed guide "([^"]*)" for the organisation "([^"]*)"$/ do |title, organisation|

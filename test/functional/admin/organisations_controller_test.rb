@@ -49,7 +49,7 @@ class Admin::OrganisationsControllerTest < ActionController::TestCase
 
     parent_org_1 = create(:organisation)
     parent_org_2 = create(:organisation)
-    topic_ids = [create(:topic), create(:topic)].map(&:id)
+    topic_ids = [create(:policy_area), create(:policy_area)].map(&:id)
 
     post :create, organisation: attributes.merge(
       organisation_classifications_attributes: [

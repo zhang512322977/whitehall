@@ -4,7 +4,7 @@ class Admin::StatisticsAnnouncementsControllerTest < ActionController::TestCase
   setup do
     @organisation = create(:organisation)
     @user = login_as create(:gds_editor, organisation: @organisation)
-    @topic = create(:topic)
+    @topic = create(:policy_area)
   end
 
   view_test "GET :new renders a new announcement form" do

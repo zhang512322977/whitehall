@@ -26,7 +26,8 @@ class StatisticsAnnouncement < ActiveRecord::Base
   has_many :statistics_announcement_dates, dependent: :destroy
 
   has_many :statistics_announcement_topics, inverse_of: :statistics_announcement, dependent: :destroy
-  has_many :topics, through: :statistics_announcement_topics
+  has_many :policy_areas, through: :statistics_announcement_topics
+  alias_attribute :topics, :policy_areas
 
   has_many :statistics_announcement_organisations, inverse_of: :statistics_announcement, dependent: :destroy
   has_many :organisations, through: :statistics_announcement_organisations

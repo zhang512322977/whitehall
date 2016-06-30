@@ -51,7 +51,7 @@ class StatisticsAnnouncementTest < ActiveSupport::TestCase
   end
 
   test 'must have at least one topic' do
-    announcement = build(:statistics_announcement, topics: [])
+    announcement = build(:statistics_announcement, policy_areas: [])
     refute announcement.valid?
   end
 
@@ -258,10 +258,10 @@ class StatisticsAnnouncementTest < ActiveSupport::TestCase
   end
 
   test 'StatisticsAnnouncement.with_topics scope returns announcements with matching topics' do
-    topic1 = create(:topic)
-    topic2 = create(:topic)
-    announcement = create(:statistics_announcement, topics: [topic1, topic2])
-    announcement2 = create(:statistics_announcement, topics: [topic2])
+    topic1 = create(:policy_area)
+    topic2 = create(:policy_area)
+    announcement = create(:statistics_announcement, policy_areas: [topic1, topic2])
+    announcement2 = create(:statistics_announcement, policy_areas: [topic2])
 
     assert_equal [announcement], StatisticsAnnouncement.with_topics(topic1)
     assert_equal [announcement], StatisticsAnnouncement.with_topics(topic1.id)

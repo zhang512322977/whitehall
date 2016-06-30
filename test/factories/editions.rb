@@ -45,7 +45,7 @@ FactoryGirl.define do
       after :build do |edition, evaluator|
         if evaluator.topics.empty?
           edition.classification_memberships.build(edition: edition,
-                                                   classification: build(:topic))
+                                                   classification: build(:policy_area))
         end
       end
     end

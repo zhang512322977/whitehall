@@ -56,7 +56,7 @@ private
 
   def base_path
     # FIXME: remove when model is renamed
-    return Whitehall.url_maker.policy_area_path(item) if item.is_a?(Topic)
+    return Whitehall.url_maker.policy_area_path(item) if item.is_a?(PolicyArea)
 
     Whitehall.url_maker.polymorphic_path(item)
   end

@@ -139,12 +139,12 @@ class EditionTest < ActiveSupport::TestCase
   end
 
   test "should return a list of editions in a topic" do
-    topic_1 = create(:topic)
-    topic_2 = create(:topic)
-    draft_publication = create(:draft_publication, topics: [topic_1])
-    published_publication = create(:published_publication, topics: [topic_1])
-    scheduled_publication = create(:scheduled_publication, topics: [topic_1])
-    published_in_second_topic = create(:published_publication, topics: [topic_2])
+    topic_1 = create(:policy_area)
+    topic_2 = create(:policy_area)
+    draft_publication = create(:draft_publication, policy_areas: [topic_1])
+    published_publication = create(:published_publication, policy_areas: [topic_1])
+    scheduled_publication = create(:scheduled_publication, policy_areas: [topic_1])
+    published_in_second_topic = create(:published_publication, policy_areas: [topic_2])
 
     assert_equal [draft_publication, published_publication, scheduled_publication], Publication.in_topic(topic_1)
     assert_equal [published_publication], Publication.published_in_topic(topic_1)
@@ -755,10 +755,10 @@ class EditionTest < ActiveSupport::TestCase
   end
 
   test 'Edition.with_classification returns any editions tagged with the given classification' do
-    topic_1 = create(:topic)
-    topic_2 = create(:topic)
-    news_article = create(:news_article, topics: [topic_1])
-    publication       = create(:publication, topics: [topic_1, topic_2])
+    topic_1 = create(:policy_area)
+    topic_2 = create(:policy_area)
+    news_article = create(:news_article, policy_areas: [topic_1])
+    publication       = create(:publication, policy_areas: [topic_1, topic_2])
     speech       = create(:speech)
 
     assert_equal [news_article, publication], Edition.with_classification(topic_1)

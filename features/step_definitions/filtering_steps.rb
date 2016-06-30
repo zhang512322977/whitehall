@@ -8,7 +8,7 @@ When(/^I (?:also )?filter by (only )?a publication type$/) do |only|
 end
 
 When(/^I (?:also )?filter by (only )?a topic$/) do |only|
-  select_filter "Topic", "A Topic", !!only
+  select_filter "PolicyArea", "A PolicyArea", !!only
 end
 
 When(/^I (?:also )?filter by (only )?a department$/) do |only|
@@ -31,7 +31,7 @@ end
 ### Publications
 
 Given(/^there are some published publications$/) do
-  topic = create :topic, name: "A Topic"
+  topic = create :topic, name: "A PolicyArea"
   department = create(:ministerial_department, name: "A Department")
   world_location = create(:world_location, name: "A World Location")
 
@@ -68,10 +68,10 @@ Then(/^I should be able to filter publications by keyword, publication type, top
   assert_listed_document_count 1
   assert page.has_content? "Guidance publication"
 
-  select_filter "Policy area", "A Topic", and_clear_others: true
+  select_filter "Policy area", "A PolicyArea", and_clear_others: true
   assert_listed_document_count 1
   assert page.has_content? "Publication with the topic"
-  assert page.text.match /1 publication about A Topic ./
+  assert page.text.match /1 publication about A PolicyArea ./
 
   select_filter "Department", "A Department", and_clear_others: true
   assert_listed_document_count 1
@@ -130,7 +130,7 @@ end
 ### Announcements
 
 Given(/^there are some published announcements$/) do
-  topic = create :topic, name: "A Topic"
+  topic = create :topic, name: "A PolicyArea"
   department = create(:ministerial_department, name: "A Department")
   world_location = create(:world_location, name: "A World Location")
 
@@ -177,7 +177,7 @@ Then(/^I should be able to filter announcements by keyword, announcement type, t
   within '#document-filter' do
     page.fill_in "Contains", with: "keyword"
     page.select "News stories", from: "Announcement type"
-    page.select "A Topic", from: "Policy area"
+    page.select "A PolicyArea", from: "Policy area"
     page.select "A Department", from: "Department"
     page.select "A World Location", from: "World locations"
     page.fill_in "Published after", with: "01/01/2013"
@@ -187,7 +187,7 @@ Then(/^I should be able to filter announcements by keyword, announcement type, t
 
   assert_listed_document_count 1
   assert page.has_content? "News Article with keyword, topic, department, world location published within date range"
-  assert page.text.match /1 announcement about A Topic . by A Department . from A World Location . containing keyword . published after 01\/01\/2013 published before 01\/03\/2013/
+  assert page.text.match /1 announcement about A PolicyArea . by A Department . from A World Location . containing keyword . published after 01\/01\/2013 published before 01\/03\/2013/
 end
 
 Given(/^there are some published announcments including a few in French$/) do

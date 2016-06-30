@@ -54,7 +54,7 @@ Then(/^I should be signed up for the "(.*?)" topical event mailing list$/) do |t
 end
 
 Then(/^I should be signed up for the "(.*?)" topic mailing list$/) do |topic_name|
-  topic_slug = Topic.find_by!(name: topic_name).slug
+  topic_slug = PolicyArea.find_by!(name: topic_name).slug
   assert_signed_up_to_mailing_list("/government/topics/#{topic_slug}.atom", topic_name)
 end
 

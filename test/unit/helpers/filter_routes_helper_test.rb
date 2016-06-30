@@ -10,7 +10,7 @@ class FilterRoutesHelperTest < ActionView::TestCase
     end
 
     test "uses the policy_area to generate the route to #{filter} filter" do
-      policy_area = create(:topic)
+      policy_area = create(:policy_area)
       assert_equal send("#{filter}_path", topics: [policy_area.slug]), send("#{filter}_filter_path", policy_area)
     end
 
@@ -21,7 +21,7 @@ class FilterRoutesHelperTest < ActionView::TestCase
 
     test "uses the organisation and policy_area and world_location to generate the route to #{filter} filter" do
       organisation = create(:organisation)
-      policy_area = create(:topic)
+      policy_area = create(:policy_area)
       world_location = create(:world_location)
       assert_equal send("#{filter}_path", departments: [organisation.slug], topics: [policy_area.slug], world_locations: [world_location.slug]), send("#{filter}_filter_path", organisation, policy_area, world_location)
     end

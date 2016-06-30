@@ -70,12 +70,12 @@ class RoutingLocaleTest < ActionDispatch::IntegrationTest
   end
 
   test "#show for a non-localised resource" do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     assert_equal "/government/topics/#{policy_area.slug}", policy_area_path(policy_area)
   end
 
   test "#show for a non-localised resource with a format" do
-    topic = create(:topic)
+    topic = create(:policy_area)
     assert_equal "/government/topics/#{topic.slug}.json", policy_area_path(topic, format: 'json')
   end
 end

@@ -101,7 +101,7 @@ module Whitehall
           when 'organisations'
             @feed_type = 'organisation'
           when 'topics'
-            @feed_type = 'topic'
+            @feed_type = 'policy_area'
           when 'topical-events'
             @feed_type = 'topical_event'
           when 'world'
@@ -175,9 +175,10 @@ module Whitehall
       end
 
       def resource_class
-        if !['organisation', 'policy', 'topic', 'topical_event', 'person', 'role', 'world_location'].include? feed_type
+        if !['organisation', 'policy', 'policy_area', 'topical_event', 'person', 'role', 'world_location'].include? feed_type
           raise ArgumentError.new("Can't process a feed for unknown type '#{feed_type}'")
         end
+
         Kernel.const_get feed_type.camelize
       end
 

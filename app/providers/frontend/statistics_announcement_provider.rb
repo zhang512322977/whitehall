@@ -34,7 +34,7 @@ module Frontend
     end
 
     def self.build_topics(topic_slugs)
-      Topic.where(slug: topic_slugs)
+      PolicyArea.where(slug: topic_slugs)
     end
 
     def self.prepare_search_params(params)

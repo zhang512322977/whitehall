@@ -2,7 +2,8 @@ class ClassificationMembership < ActiveRecord::Base
   belongs_to :edition
   belongs_to :classification, foreign_key: :classification_id, inverse_of: :classification_memberships
   belongs_to :topical_event, foreign_key: :classification_id
-  belongs_to :topic, foreign_key: :classification_id
+  belongs_to :policy_area, foreign_key: :classification_id
+  alias_attribute :topic, :policy_area
 
   belongs_to :detailed_guide, foreign_key: :edition_id
   belongs_to :announcement, foreign_key: :edition_id

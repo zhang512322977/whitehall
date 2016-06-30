@@ -11,7 +11,7 @@ FactoryGirl.define do
     publication_type_id PublicationType::OfficialStatistics.id
     organisations { FactoryGirl.build_list :organisation, 1 }
 
-    topics { FactoryGirl.build_list :topic, 1 }
+    policy_areas { FactoryGirl.build_list :policy_area, 1 }
     association :creator, factory: :writer
     association :current_release_date, factory: :statistics_announcement_date
 

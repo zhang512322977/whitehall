@@ -46,7 +46,7 @@ class Frontend::StatisticsAnnouncementsFilterTest < ActiveSupport::TestCase
   end
 
   test "policy_areas= parses slugs into real policy_areas" do
-    policy_area_1, policy_area_2 = 2.times.map { create(:topic) }
+    policy_area_1, policy_area_2 = 2.times.map { create(:policy_area) }
     assert_equal [policy_area_1, policy_area_2], build(policy_areas: [policy_area_1.slug, policy_area_2.slug]).policy_areas
   end
 
@@ -60,13 +60,13 @@ class Frontend::StatisticsAnnouncementsFilterTest < ActiveSupport::TestCase
   end
 
   test "policy_area_slugs returns slugs of policy_areas" do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     assert_equal [policy_area.slug], build(policy_areas: [policy_area.slug]).policy_area_slugs
   end
 
   test "#valid_filter_params returns all attributes if all are present and valid excluding pagination parameters" do
     organisation = create :organisation
-    policy_area = create :topic
+    policy_area = create :policy_area
 
     filter = build(keywords: "keyword",
                    from_date: "2020-01-01",

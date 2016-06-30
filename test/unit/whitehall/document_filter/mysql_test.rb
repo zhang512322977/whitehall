@@ -234,8 +234,8 @@ module Whitehall::DocumentFilter
 
     test "avoids loading the wrong document when combining topic and department filter" do
       organisation = create(:organisation)
-      topic = create(:topic)
-      news_article = create(:published_news_article, topics: [topic], organisations: [organisation])
+      topic = create(:policy_area)
+      news_article = create(:published_news_article, policy_areas: [topic], organisations: [organisation])
 
       document_scope = Announcement.published.includes(:document, :organisations)
       filter = create_filter(document_scope, departments: [organisation.slug], topics: [topic.slug], page: 1)
@@ -244,9 +244,9 @@ module Whitehall::DocumentFilter
     end
 
     test "can filter announcements by topic" do
-      topic = create(:topic)
-      create(:published_speech, topics: [topic])
-      create(:published_news_article, topics: [topic])
+      topic = create(:policy_area)
+      create(:published_speech, policy_areas: [topic])
+      create(:published_news_article, policy_areas: [topic])
       create(:published_speech)
       create(:published_news_article)
       unfiltered_announcements = Announcement.published

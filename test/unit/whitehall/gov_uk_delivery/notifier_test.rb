@@ -57,7 +57,7 @@ class Whitehall::GovUkDelivery::NotifierTest < ActiveSupport::TestCase
   end
 
   test '#edition_published! does nothing if the change is minor' do
-    publication = create(:published_publication, topics: [create(:topic)], minor_change: true, public_timestamp: Time.zone.now)
+    publication = create(:published_publication, policy_areas: [create(:policy_area)], minor_change: true, public_timestamp: Time.zone.now)
 
     expect_govdelivery_worker_to_not_be_notified
 
@@ -67,7 +67,7 @@ class Whitehall::GovUkDelivery::NotifierTest < ActiveSupport::TestCase
 
   test '#edition_published! does nothing if the edition is not available in english' do
     speech = I18n.with_locale(:es) { create(:published_speech, minor_change: false, major_change_published_at: Time.zone.now) }
-    speech.stubs(:topics).returns [create(:topic)]
+    speech.stubs(:topics).returns [create(:policy_area)]
 
     expect_govdelivery_worker_to_not_be_notified
 
@@ -76,7 +76,7 @@ class Whitehall::GovUkDelivery::NotifierTest < ActiveSupport::TestCase
   end
 
   test '#edition_published! does nothing if the edition was published in the past' do
-    publication = create(:published_publication, topics: [create(:topic)], minor_change: false, public_timestamp: 2.days.ago)
+    publication = create(:published_publication, policy_areas: [create(:policy_area)], minor_change: false, public_timestamp: 2.days.ago)
 
     expect_govdelivery_worker_to_not_be_notified
 

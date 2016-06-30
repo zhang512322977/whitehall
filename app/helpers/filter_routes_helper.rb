@@ -29,7 +29,7 @@ protected
     objects.reduce({}) do |out, obj|
       if obj.is_a? Organisation
         out[:departments] = [obj.slug]
-      elsif obj.is_a? Topic
+      elsif obj.is_a? PolicyArea
         out[:topics] = [obj.slug]
       elsif obj.is_a? TopicalEvent
         out[:topics] = [obj.slug]

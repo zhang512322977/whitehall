@@ -12,12 +12,12 @@ class ClassificationRoutesHelperTest < ActionView::TestCase
   end
 
   test "given a policy area creates a policy area path" do
-    classification = create(:topic)
+    classification = create(:policy_area)
     assert_equal send("policy_area_path", classification), classification_path(classification)
   end
 
   test "given a policy area creates a policy area url" do
-    classification = create(:topic)
+    classification = create(:policy_area)
     assert_equal send("policy_area_url", classification), classification_url(classification)
   end
 end

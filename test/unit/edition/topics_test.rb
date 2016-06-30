@@ -6,18 +6,18 @@ class Edition::TopicsTest < ActiveSupport::TestCase
   end
 
   setup do
-    @topic = create(:topic)
+    @topic = create(:policy_area)
   end
 
   test "#destroy should also remove the classification membership relationship" do
-    edition = create(:draft_publication, topics: [@topic])
+    edition = create(:draft_publication, policy_areas: [@topic])
     relation = edition.classification_memberships.first
     edition.destroy
     refute ClassificationMembership.exists?(relation.id)
   end
 
   test "new edition of document that is a member of a topic should remain a member of that topic" do
-    edition = create(:published_publication, topics: [@topic])
+    edition = create(:published_publication, policy_areas: [@topic])
     new_edition = edition.create_draft(create(:writer))
 
     assert_equal [@topic], new_edition.topics
@@ -37,13 +37,13 @@ class Edition::TopicsTest < ActiveSupport::TestCase
   end
 
   test "#title_with_topics returns the title and its topics's titles" do
-    edition = EditionWithTopics.new(title: 'Edition Title', topics: [build(:topic, name: 'Topic 1')])
+    edition = EditionWithTopics.new(title: 'Edition Title', topics: [build(:policy_area, name: 'PolicyArea 1')])
 
-    assert_equal "Edition Title (Topic 1)", edition.title_with_topics
+    assert_equal "Edition Title (PolicyArea 1)", edition.title_with_topics
 
-    edition.topics << build(:topic, name: 'Topic 2')
+    edition.topics << build(:policy_area, name: 'PolicyArea 2')
 
-    assert_equal "Edition Title (Topic 1 and Topic 2)", edition.title_with_topics
+    assert_equal "Edition Title (PolicyArea 1 and PolicyArea 2)", edition.title_with_topics
   end
 
 private

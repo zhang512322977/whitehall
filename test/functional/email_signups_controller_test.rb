@@ -4,7 +4,7 @@ class EmailSignupsControllerTest < ActionController::TestCase
   include FeedHelper
 
   view_test 'GET :new with a valid field displays the subscription form' do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     get :new, email_signup: { feed: atom_feed_url_for(policy_area) }
 
     assert_response :success
@@ -21,7 +21,7 @@ class EmailSignupsControllerTest < ActionController::TestCase
 
   test 'POST :create with a valid email signup redirects to the govdelivery URL' do
     Whitehall.govuk_delivery_client.stubs(:signup_url).returns('http://govdelivery_signup_url')
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     post :create, email_signup: { feed: atom_feed_url_for(policy_area) }
 
     assert_response :redirect

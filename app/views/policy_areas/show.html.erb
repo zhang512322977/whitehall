@@ -26,7 +26,7 @@
             <% if @related_classifications.any? %>
               <dt>Related policy areas:</dt>
               <dd class="js-hide-other-links related-topics">
-                <%= @related_classifications.map { |rc| rc.is_a?(Topic) ? link_to(rc.name, policy_area_path(rc)) : link_to(rc.name, rc) }.to_sentence.html_safe %>
+                <%= @related_classifications.map { |rc| rc.is_a?(PolicyArea) ? link_to(rc.name, policy_area_path(rc)) : link_to(rc.name, rc) }.to_sentence.html_safe %>
               </dd>
             <% end %>
           </dl>

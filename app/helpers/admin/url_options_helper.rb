@@ -14,7 +14,7 @@ module Admin::UrlOptionsHelper
   def show_url_with_public_and_cachebusted_options(model)
     resource_name = model.class.to_s.underscore
     # FIXME: remove special case when model is renamed
-    resource_name = 'policy_area' if model.is_a?(Topic)
+    resource_name = 'policy_area' if model.is_a?(PolicyArea)
     send("#{resource_name}_url", model, public_and_cachebusted_url_options)
   end
 

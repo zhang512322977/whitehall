@@ -22,13 +22,13 @@ Given(/^there is a document tagged to specialist sectors$/) do
   document_content_item = content_item_for_base_path(document_base_path).merge!({
     "links" => {
       "parent" => [{ "base_path" => parent_base_path }],
-      "topics" => [{ "title" => "Topic 1" }, { "title" => "Topic 2"  }]
+      "topics" => [{ "title" => "PolicyArea 1" }, { "title" => "PolicyArea 2"  }]
     }
   })
   parent_content_item = content_item_for_base_path(parent_base_path).merge!({
     "links" => {
       "parent" => [{
-        "title" => "Top Level Topic",
+        "title" => "Top Level PolicyArea",
         "web_url" => "http://gov.uk/top-level-topic"
       }]
     }
@@ -40,7 +40,7 @@ end
 
 Then(/^I should see the specialist sub\-sector and its parent sector$/) do
   header = find("article header")
-  assert header.has_content?("Top Level Topic")
-  assert header.has_css?('dd', text: "Topic 1 and Topic 2", exact: false)
+  assert header.has_content?("Top Level PolicyArea")
+  assert header.has_css?('dd', text: "PolicyArea 1 and PolicyArea 2", exact: false)
 end
 

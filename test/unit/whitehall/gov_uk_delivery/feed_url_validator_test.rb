@@ -17,7 +17,7 @@ class Whitehall::GovUkDelivery::FeedUrlValidatorTest < ActiveSupport::TestCase
   end
 
   test 'validates and describes a publication filter feed url with filter options' do
-    create(:topic, slug: 'arts-and-culture', name: 'Arts and culture')
+    create(:policy_area, slug: 'arts-and-culture', name: 'Arts and culture')
     create(:ministerial_department, :with_published_edition, name: 'The Cabinet Office')
     create(:world_location, slug: 'afghanistan', name: 'Afghanistan')
 
@@ -36,7 +36,7 @@ class Whitehall::GovUkDelivery::FeedUrlValidatorTest < ActiveSupport::TestCase
   end
 
   test 'validates and describes an announcements filter feed url' do
-    create(:topic, slug: 'arts-and-culture', name: 'Arts and culture')
+    create(:policy_area, slug: 'arts-and-culture', name: 'Arts and culture')
     create(:ministerial_department, :with_published_edition, name: 'The Cabinet Office')
     create(:world_location, slug: 'afghanistan', name: 'Afghanistan')
 
@@ -53,7 +53,7 @@ class Whitehall::GovUkDelivery::FeedUrlValidatorTest < ActiveSupport::TestCase
   end
 
   test 'validates and describes a statistics filter feed url with filter options' do
-    create(:topic, slug: 'arts-and-culture', name: 'Arts and culture')
+    create(:policy_area, slug: 'arts-and-culture', name: 'Arts and culture')
     create(:ministerial_department, :with_published_edition, name: 'The Cabinet Office')
 
     feed_url = feed_url_for(
@@ -85,7 +85,7 @@ class Whitehall::GovUkDelivery::FeedUrlValidatorTest < ActiveSupport::TestCase
   end
 
   test 'validates and describes a topic feed url' do
-    topic     = create(:topic)
+    topic     = create(:policy_area)
     feed_url  = atom_feed_maker.policy_area_url(topic)
     validator = FeedUrlValidator.new(feed_url)
 

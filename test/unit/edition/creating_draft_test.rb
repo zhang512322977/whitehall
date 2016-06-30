@@ -73,11 +73,11 @@ class Edition::WorkflowTest < ActiveSupport::TestCase
   end
 
   test "should build a draft copy with references to topics, organisations & world locations" do
-    topic = create(:topic)
+    topic = create(:policy_area)
     organisation = create(:organisation)
     country = create(:world_location)
 
-    published_publication = create(:published_publication, topics: [topic], organisations: [organisation], world_locations: [country])
+    published_publication = create(:published_publication, policy_areas: [topic], organisations: [organisation], world_locations: [country])
 
     draft_publication = published_publication.create_draft(create(:writer))
 
@@ -100,8 +100,8 @@ class Edition::WorkflowTest < ActiveSupport::TestCase
   end
 
   test "should build a draft copy preserving ordering with topic" do
-    topic = create(:topic)
-    published_publication = create(:published_publication, topics: [topic])
+    topic = create(:policy_area)
+    published_publication = create(:published_publication, policy_areas: [topic])
     association = topic.classification_memberships.where(edition_id: published_publication.id).first
     association.update_attributes(ordering: 31)
 

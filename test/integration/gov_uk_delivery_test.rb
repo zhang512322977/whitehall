@@ -11,7 +11,7 @@ class GovUkDeliveryTest < ActiveSupport::TestCase
 
   test "Publishing a publication calls govuk-delivery API" do
     Edition::AuditTrail.whodunnit = create(:user)
-    publication = create(:submitted_publication, topics: [create(:topic), create(:topic)])
+    publication = create(:submitted_publication, policy_areas: [create(:policy_area), create(:policy_area)])
     publication.first_published_at = Time.zone.now
     publication.major_change_published_at = Time.zone.now
     Whitehall::GovUkDelivery::SubscriptionUrlGenerator.any_instance.stubs(:subscription_urls).returns(['http://example.com/feed'])
@@ -27,7 +27,7 @@ class GovUkDeliveryTest < ActiveSupport::TestCase
 
   test "API 400 errors calls don't block publishing" do
     Edition::AuditTrail.whodunnit = create(:user)
-    publication = create(:submitted_publication, topics: [create(:topic), create(:topic)])
+    publication = create(:submitted_publication, policy_areas: [create(:policy_area), create(:policy_area)])
     publication.first_published_at = Time.zone.now
     publication.major_change_published_at = Time.zone.now
     Whitehall::GovUkDelivery::SubscriptionUrlGenerator.any_instance.stubs(:subscription_urls).returns(['http://example.com/feed'])

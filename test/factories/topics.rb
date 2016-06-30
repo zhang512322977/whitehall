@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :topic do
+  factory :policy_area do
     sequence(:name) { |index| "topic-#{index}" }
-    description 'Topic description'
+    description 'PolicyArea description'
   end
 end

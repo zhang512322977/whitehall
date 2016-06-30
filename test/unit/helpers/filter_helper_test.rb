@@ -16,7 +16,7 @@ class FilterHelperTest < ActionView::TestCase
   end
 
   test "#topic_options_for_statistics_announcement_filter renders select options for all topics with an associated release announcement in alphabetical order selecting passed in topic" do
-    topic_1, topic_2, topic_3 = create(:topic, name: "B topic"), create(:topic, name: "C topic"), create(:topic, name: "A topic")
+    topic_1, topic_2, topic_3 = create(:policy_area, name: "B topic"), create(:policy_area, name: "C topic"), create(:policy_area, name: "A topic")
 
     create :statistics_announcement, topics: [topic_2]
     create :statistics_announcement, topics: [topic_3]
@@ -59,7 +59,7 @@ class FilterHelperTest::FilterDescriptionTest < ActionView::TestCase
   end
 
   test "It describes topics" do
-    topic = build(:topic, name: "Community and society")
+    topic = build(:policy_area, name: "Community and society")
     assert_string_includes "about Community and society", rendered_description(build_filter(topics: [topic])).text
   end
 
@@ -86,7 +86,7 @@ class FilterHelperTest::FilterDescriptionTest < ActionView::TestCase
   end
 
   test "It renders links to remove search parameters" do
-    topic = build(:topic, name: "Community and society", slug: "community-and-society")
+    topic = build(:policy_area, name: "Community and society", slug: "community-and-society")
     organisation = build(:organisation, name: "Department of Magic", slug: "department-of-magic")
 
     filter = build_filter keywords: "fishslice",

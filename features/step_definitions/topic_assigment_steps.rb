@@ -1,6 +1,6 @@
 Given(/^a publicationesque that can be assigned to policies and topics$/) do
   @edition = create(:draft_publication)
-  @topic = create(:topic)
+  @topic = create(:policy_area)
 end
 
 When(/^I assign the publicationesque to a topic$/) do
@@ -15,7 +15,7 @@ end
 
 Given(/^an announcement that can be assigned to policies and topics$/) do
   @edition = create(:draft_news_article)
-  @topic = create(:topic)
+  @topic = create(:policy_area)
 end
 
 When(/^I assign the announcement to a policy with topics$/) do

@@ -1,25 +1,25 @@
 require 'test_helper'
 
-# NB: Topic is being renamed to "Policy Area" across GOV.UK.
+# NB: PolicyArea is being renamed to "Policy Area" across GOV.UK.
 class TopicTest < ActiveSupport::TestCase
   test "should set a slug from the topic name" do
-    topic = create(:topic, name: 'Love all the people')
+    topic = create(:policy_area, name: 'Love all the people')
     assert_equal 'love-all-the-people', topic.slug
   end
 
   test "should not change the slug when the name is changed" do
-    topic = create(:topic, name: 'Love all the people')
+    topic = create(:policy_area, name: 'Love all the people')
     topic.update_attributes(name: 'Hold hands')
     assert_equal 'love-all-the-people', topic.slug
   end
 
   test "should not include apostrophes in slug" do
-    topic = create(:topic, name: "Bob's bike")
+    topic = create(:policy_area, name: "Bob's bike")
     assert_equal 'bobs-bike', topic.slug
   end
 
   test "should not be deletable if there are associated policies" do
-    topic = create(:topic, policy_content_ids: [])
+    topic = create(:policy_area, policy_content_ids: [])
     assert topic.destroyable?
 
     topic.update(policy_content_ids: [policy_1["content_id"]])
@@ -30,7 +30,7 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test 'includes linked policies with multiple parents' do
-    topic = create(:topic)
+    topic = create(:policy_area)
     assert_equal [], topic.policy_content_ids
 
     topic.policy_content_ids = [policy_2.fetch("content_id")]
@@ -42,9 +42,9 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test "return topics bi-directionally related to specific topic" do
-    topic_1 = create(:topic)
-    topic_2 = create(:topic)
-    topic = build(:topic, related_classifications: [topic_1, topic_2])
+    topic_1 = create(:policy_area)
+    topic_2 = create(:policy_area)
+    topic = build(:policy_area, related_classifications: [topic_1, topic_2])
     topic.save!
 
     assert_equal [topic_1, topic_2], topic.related_classifications
@@ -53,9 +53,9 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test "should add related topics bi-directionally" do
-    topic_1 = create(:topic)
-    topic_2 = create(:topic)
-    topic = create(:topic, related_classifications: [])
+    topic_1 = create(:policy_area)
+    topic_2 = create(:policy_area)
+    topic = create(:policy_area, related_classifications: [])
 
     topic.update_attributes!(related_classification_ids: [topic_1.id, topic_2.id])
 
@@ -65,9 +65,9 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test "should remove related topics bi-directionally" do
-    topic_1 = create(:topic)
-    topic_2 = create(:topic)
-    topic = create(:topic, related_classifications: [topic_1, topic_2])
+    topic_1 = create(:policy_area)
+    topic_2 = create(:policy_area)
+    topic = create(:policy_area, related_classifications: [topic_1, topic_2])
 
     topic.update_attributes!(related_classification_ids: [])
 
@@ -77,7 +77,7 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test 'should return search index data suitable for Rummageable' do
-    topic = create(:topic, content_id: 'aa1f1646-6ae6-4a65-86e3-9803fa870c6a', name: "topic name", description: "topic description")
+    topic = create(:policy_area, content_id: 'aa1f1646-6ae6-4a65-86e3-9803fa870c6a', name: "topic name", description: "topic description")
     assert_equal({
                   'content_id' => 'aa1f1646-6ae6-4a65-86e3-9803fa870c6a',
                   'title' => 'topic name',
@@ -91,7 +91,7 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test 'should add topic to search index on creating' do
-    topic = build(:topic)
+    topic = build(:policy_area)
 
     Whitehall::SearchIndex.expects(:add).with(topic)
 
@@ -99,7 +99,7 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test 'should add topic to search index on updating' do
-    topic = create(:topic)
+    topic = create(:policy_area)
 
     Whitehall::SearchIndex.expects(:add).with(topic)
 
@@ -108,29 +108,29 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test 'should remove topic from search index on destroying' do
-    topic = create(:topic)
+    topic = create(:policy_area)
     Whitehall::SearchIndex.expects(:delete).with(topic)
     topic.destroy
   end
 
   test 'should return search index data for all topics' do
-    create(:topic)
-    create(:topic)
-    create(:topic)
-    create(:topic)
+    create(:policy_area)
+    create(:policy_area)
+    create(:policy_area)
+    create(:policy_area)
 
-    results = Topic.search_index.to_a
+    results = PolicyArea.search_index.to_a
 
     assert_equal 4, results.length
   end
 
   test 'should be retrievable in an alphabetically ordered list' do
-    cheese = create(:topic, name: "Cheese")
-    bananas = create(:topic, name: "Bananas")
-    dates = create(:topic, name: "Dates")
-    apples = create(:topic, name: "Apples")
+    cheese = create(:policy_area, name: "Cheese")
+    bananas = create(:policy_area, name: "Bananas")
+    dates = create(:policy_area, name: "Dates")
+    apples = create(:policy_area, name: "Apples")
 
-    assert_equal [apples, bananas, cheese, dates], Topic.alphabetical
+    assert_equal [apples, bananas, cheese, dates], PolicyArea.alphabetical
   end
 
   ### Describing top tasks ###
@@ -144,7 +144,7 @@ class TopicTest < ActiveSupport::TestCase
          title: "Wah wah"},
       ]
     }
-    topic = create(:topic, params)
+    topic = create(:policy_area, params)
 
     links = topic.featured_links
     assert_equal 2, links.count
@@ -155,7 +155,7 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test 'feature links are returned in order of creation' do
-    topic = create(:topic)
+    topic = create(:policy_area)
     link_1 = create(:featured_link, linkable: topic, title: '2 days ago', created_at: 2.days.ago)
     link_2 = create(:featured_link, linkable: topic, title: '12 days ago', created_at: 12.days.ago)
     link_3 = create(:featured_link, linkable: topic, title: '1 hour ago', created_at: 1.hour.ago)
@@ -173,14 +173,14 @@ class TopicTest < ActiveSupport::TestCase
          title: ""}
       ]
     }
-    topic = build(:topic, params)
+    topic = build(:policy_area, params)
     assert topic.featured_links.empty?
   end
 
   test "with_statistics_announcements scopes to organisations with associated statistics_announcements" do
-    topic_with_announcement = create(:topic)
-    create(:statistics_announcement, topics: [topic_with_announcement])
-    topic_without_announcement = create(:topic)
-    assert_equal [topic_with_announcement], Topic.with_statistics_announcements
+    topic_with_announcement = create(:policy_area)
+    create(:statistics_announcement, policy_areas: [topic_with_announcement])
+    topic_without_announcement = create(:policy_area)
+    assert_equal [topic_with_announcement], PolicyArea.with_statistics_announcements
   end
 end

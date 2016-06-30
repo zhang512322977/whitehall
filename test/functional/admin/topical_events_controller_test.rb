@@ -35,9 +35,9 @@ class Admin::TopicalEventsControllerTest < ActionController::TestCase
   end
 
   view_test 'GET :index lists the topical events' do
-    topical_event_c = create(:topical_event, name: "Topic C")
-    topical_event_a = create(:topical_event, name: "Topic A")
-    topical_event_b = create(:topical_event, name: "Topic B")
+    topical_event_c = create(:topical_event, name: "PolicyArea C")
+    topical_event_a = create(:topical_event, name: "PolicyArea A")
+    topical_event_b = create(:topical_event, name: "PolicyArea B")
 
     get :index
 

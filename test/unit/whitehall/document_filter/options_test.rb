@@ -39,10 +39,10 @@ module Whitehall
       end
 
       test '#label_for downcases topics' do
-        topic = create(:topic, name: "Example Topic", slug: "example-topic")
+        topic = create(:policy_area, name: "Example PolicyArea", slug: "example-topic")
         topical_event = create(:topical_event, :active, name: "Example Topical Event", slug: "example-topical-event")
 
-        assert_equal "Example Topic", filter_options.label_for("topics", "example-topic")
+        assert_equal "Example PolicyArea", filter_options.label_for("topics", "example-topic")
         assert_equal "Example Topical Event", filter_options.label_for("topics", "example-topical-event")
         assert_equal "All policy areas", filter_options.label_for("topics", "all")
       end
@@ -97,7 +97,7 @@ module Whitehall
       end
 
       test "#valid_resource_filter_options? returns true when filtered resources exist" do
-        topic = create(:topic)
+        topic = create(:policy_area)
         assert filter_options.valid_resource_filter_options?(topics: [topic.slug])
       end
 
@@ -139,7 +139,7 @@ module Whitehall
       end
 
       test "can get the list of options for topics" do
-        topic = create(:topic)
+        topic = create(:policy_area)
         topical_event = create(:topical_event, :active)
 
         options = filter_options.for(:topics)

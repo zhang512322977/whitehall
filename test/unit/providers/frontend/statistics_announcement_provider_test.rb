@@ -43,7 +43,7 @@ class Frontend::StatisticsAnnouncementProviderTest < ActiveSupport::TestCase
 
   test "#search: release announcments are inflated from rummager hashes" do
     organisation = create(:organisation, name: 'Cabinet Office', slug: 'cabinet-office')
-    topic = create(:topic, name: 'Home affairs', slug: 'home-affairs')
+    topic = create(:policy_area, name: 'Home affairs', slug: 'home-affairs')
 
     @mock_source.stubs(:advanced_search).returns('total' => 1, 'results' => [{
       "title" => "A title",

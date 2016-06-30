@@ -161,7 +161,7 @@ module Whitehall
       Organisation,
       MinisterialRole,
       Person,
-      Topic,
+      PolicyArea,
       TopicalEvent,
       OperationalField,
       PolicyGroup,

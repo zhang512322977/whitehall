@@ -9,7 +9,7 @@ class LatestDocumentsFilterTest < ActiveSupport::TestCase
   end
 
   test '.for_subject should return an instance of ClassificationFilter for a topic' do
-    topic = create(:topic)
+    topic = create(:policy_area)
     filter = LatestDocumentsFilter.for_subject(topic)
 
     assert filter.is_a?(LatestDocumentsFilter::ClassificationFilter)
@@ -139,10 +139,10 @@ class ClassificationFilterTest < ActiveSupport::TestCase
 
 private
   def topic
-    @topic ||= create(:topic)
+    @topic ||= create(:policy_area)
   end
 
   def document(document_type, attributes = {})
-    create("published_#{document_type}", attributes.merge(topics: [topic]))
+    create("published_#{document_type}", attributes.merge(policy_areas: [topic]))
   end
 end

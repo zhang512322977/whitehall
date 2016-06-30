@@ -137,8 +137,8 @@ class Admin::EditionFilterTest < ActiveSupport::TestCase
   end
 
   test "can filter by classifications" do
-    topic       = create(:topic)
-    tagged_news = create(:published_news_article, topics: [topic])
+    topic       = create(:policy_area)
+    tagged_news = create(:published_news_article, policy_areas: [topic])
     not_tagged  = create(:published_news_article)
     filter      = Admin::EditionFilter.new(Edition, @current_user, classification: topic.to_param)
 

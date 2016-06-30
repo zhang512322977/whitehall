@@ -17,7 +17,7 @@ class Admin::WorldLocationNewsArticlesControllerTest < ActionController::TestCas
                               primary_locale: 'fr',
                               world_location_ids: [@world_location.id],
                               worldwide_organisation_ids: [@worldwide_organisation.id],
-                              topic_ids: [create(:topic).id],
+                              topic_ids: [create(:policy_area).id],
                               previously_published: false
                             }
     edition = Edition.last
@@ -43,7 +43,7 @@ class Admin::WorldLocationNewsArticlesControllerTest < ActionController::TestCas
                               primary_locale: '',
                               world_location_ids: [@world_location.id],
                               worldwide_organisation_ids: [@worldwide_organisation.id],
-                              topic_ids: [create(:topic).id],
+                              topic_ids: [create(:policy_area).id],
                               previously_published: false
                             }
 

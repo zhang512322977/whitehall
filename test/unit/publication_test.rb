@@ -157,12 +157,12 @@ end
 
 class PublicationsInTopicsTest < ActiveSupport::TestCase
   def setup
-    @topic_1 = create(:topic)
-    @topic_2 = create(:topic)
+    @topic_1 = create(:policy_area)
+    @topic_2 = create(:policy_area)
   end
 
   test "should be able to find a publication from an associated topic" do
-    published_publication = create(:published_publication, topics: [@topic_1])
+    published_publication = create(:published_publication, policy_areas: [@topic_1])
 
     assert_equal [published_publication], Publication.published_in_topic([@topic_1]).load
   end
@@ -173,22 +173,22 @@ class PublicationsInTopicsTest < ActiveSupport::TestCase
 
   test "returns publications with any of the listed topics" do
     publications = [
-      create(:published_publication, topics: [@topic_1]),
-      create(:published_publication, topics: [@topic_2])
+      create(:published_publication, policy_areas: [@topic_1]),
+      create(:published_publication, policy_areas: [@topic_2])
     ]
 
     assert_equal publications, Publication.published_in_topic([@topic_1, @topic_2]).load
   end
 
   test "should only find published publications, not draft ones" do
-    published_publication = create(:published_publication, topics: [@topic_1])
-    create(:draft_publication, topics: [@topic_1])
+    published_publication = create(:published_publication, policy_areas: [@topic_1])
+    create(:draft_publication, policy_areas: [@topic_1])
 
     assert_equal [published_publication], Publication.published_in_topic([@topic_1]).load
   end
 
   test "should be able to get items scheduled in a particular topic" do
-    scheduled_publication = create(:scheduled_publication, topics: [@topic_1])
+    scheduled_publication = create(:scheduled_publication, policy_areas: [@topic_1])
 
     assert_equal [scheduled_publication], Publication.scheduled_in_topic([@topic_1]).load
   end

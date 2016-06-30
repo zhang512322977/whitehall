@@ -41,18 +41,18 @@ class ClassificationTest < ActiveSupport::TestCase
   end
 
   test "#latest should return specified number of associated publised editions except world location news articles in reverse chronological order" do
-    topic = create(:topic)
-    other_topic = create(:topic)
+    topic = create(:policy_area)
+    other_topic = create(:policy_area)
     expected_order = [
-      create(:published_publication, topics: [topic], first_published_at: 1.day.ago),
-      create(:published_news_article, topics: [topic], first_published_at: 1.week.ago),
-      create(:published_publication, topics: [topic], first_published_at: 2.weeks.ago),
-      create(:published_speech, topics: [topic], first_published_at: 3.weeks.ago),
-      create(:published_publication, topics: [topic], first_published_at: 4.weeks.ago)
+      create(:published_publication, policy_areas: [topic], first_published_at: 1.day.ago),
+      create(:published_news_article, policy_areas: [topic], first_published_at: 1.week.ago),
+      create(:published_publication, policy_areas: [topic], first_published_at: 2.weeks.ago),
+      create(:published_speech, policy_areas: [topic], first_published_at: 3.weeks.ago),
+      create(:published_publication, policy_areas: [topic], first_published_at: 4.weeks.ago)
     ]
-    create(:draft_speech, topics: [topic], first_published_at: 2.days.ago)
-    create(:published_speech, topics: [other_topic], first_published_at: 2.days.ago)
-    create(:published_world_location_news_article, topics: [topic], first_published_at: 2.days.ago)
+    create(:draft_speech, policy_areas: [topic], first_published_at: 2.days.ago)
+    create(:published_speech, policy_areas: [other_topic], first_published_at: 2.days.ago)
+    create(:published_world_location_news_article, policy_areas: [topic], first_published_at: 2.days.ago)
 
     assert_equal expected_order, topic.latest(10)
     assert_equal expected_order[0..1], topic.latest(2)
@@ -88,7 +88,7 @@ class ClassificationTest < ActiveSupport::TestCase
   end
 
   test '#featured_editions returns featured editions by ordering' do
-    topic = create(:topic)
+    topic = create(:policy_area)
     alpha = topic.feature(edition_id: create(:edition, title: "Alpha").id, ordering: 1, alt_text: 'A thing', image: create(:classification_featuring_image_data))
     beta  = topic.feature(edition_id: create(:published_news_article, title: "Beta").id, ordering: 2, alt_text: 'A thing', image: create(:classification_featuring_image_data))
     gamma = topic.feature(edition_id: create(:published_news_article, title: "Gamma").id, ordering: 3, alt_text: 'A thing', image: create(:classification_featuring_image_data))
@@ -112,7 +112,7 @@ class ClassificationTest < ActiveSupport::TestCase
   end
 
   test '#importance_ordered_organisations' do
-    topic = create(:topic)
+    topic = create(:policy_area)
     supporting_org = create(:organisation)
     supporting_org.organisation_classifications.create(classification_id: topic.id, lead: false)
     second_lead_org = create(:organisation)

@@ -122,7 +122,7 @@ Given(/^I have an offsite link "(.*?)" for the organisation "(.*?)"$/) do |title
 end
 
 When /^I add a new organisation called "([^"]*)"$/ do |organisation_name|
-  create(:topic, name: 'Jazz Bizniz')
+  create(:policy_area, name: 'Jazz Bizniz')
 
   visit new_admin_organisation_path
 

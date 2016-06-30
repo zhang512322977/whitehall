@@ -558,7 +558,7 @@ class OrganisationTest < ActiveSupport::TestCase
 
   test 'destroy removes topic relationships' do
     organisation = create(:organisation)
-    topic = create(:topic)
+    topic = create(:policy_area)
     topic.organisations << organisation
     organisation.destroy
     assert_equal 0, OrganisationClassification.count
@@ -660,7 +660,7 @@ class OrganisationTest < ActiveSupport::TestCase
   end
 
   test "topics are explicitly ordered" do
-    topics = [create(:topic), create(:topic)]
+    topics = [create(:policy_area), create(:policy_area)]
     organisation = create(:organisation)
     organisation.organisation_classifications.create(classification_id: topics[0].id, ordering: 2)
     organisation.organisation_classifications.create(classification_id: topics[1].id, ordering: 1)

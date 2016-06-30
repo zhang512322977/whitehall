@@ -165,7 +165,7 @@ class AnnouncementsControllerTest < ActionController::TestCase
   end
 
   view_test 'index atom feed autodiscovery link includes any present filters' do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     organisation = create(:organisation)
 
     get :index, topics: [policy_area], departments: [organisation]
@@ -223,7 +223,7 @@ class AnnouncementsControllerTest < ActionController::TestCase
   end
 
   view_test "index requested as JSON includes email signup path with organisation and policy_area parameters" do
-    policy_area = create(:topic)
+    policy_area = create(:policy_area)
     organisation = create(:organisation)
 
     get :index, format: :json, to_date: "2012-01-01", topics: [policy_area.slug], departments: [organisation.slug]

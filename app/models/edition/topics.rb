@@ -1,10 +1,11 @@
-# NB: Topic is being renamed to "Policy Area" across GOV.UK.
+# NB: PolicyArea is being renamed to "Policy Area" across GOV.UK.
 module Edition::Topics
   extend ActiveSupport::Concern
   include Edition::Classifications
 
   included do
-    has_many :topics, through: :classification_memberships, source: :topic
+    has_many :policy_areas, through: :classification_memberships, source: :policy_area
+    alias_attribute :topics, :policy_areas
     validate :has_at_least_one_topic, unless: :imported?
   end
 

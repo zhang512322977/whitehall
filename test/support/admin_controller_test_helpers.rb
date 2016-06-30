@@ -115,7 +115,7 @@ module AdminControllerTestHelpers
       test "creates contact information" do
         attributes = attributes_for(type)
 
-        topic = create(:topic)
+        topic = create(:policy_area)
 
         post :create, type => attributes.merge(
           contacts_attributes: [{description: "Enquiries", contact_numbers_attributes: [{label: "Fax", number: "020712435678"}]}],

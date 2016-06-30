@@ -46,7 +46,7 @@ module NavigationHelpers
   end
 
   def visit_policy_area(name)
-    visit policy_area_path(Topic.find_by!(name: name))
+    visit policy_area_path(PolicyArea.find_by!(name: name))
   end
 
   def visit_public_index_for(edition)

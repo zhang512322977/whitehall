@@ -63,14 +63,14 @@ Scenario: Featuring content on a topic page
   Then I should see the publication "Cold fusion" featured on the public topic page for "Science and Innovation"
 
 Scenario: Creating offsite content on a topic page
-  Given a topic called "Excellent Topic" exists
-  When I add the offsite link "Offsite Thing" of type "Alert" to the topic "Excellent Topic"
-  Then I should see the edit offsite link "Offsite Thing" on the "Excellent Topic" topic page
+  Given a topic called "Excellent PolicyArea" exists
+  When I add the offsite link "Offsite Thing" of type "Alert" to the topic "Excellent PolicyArea"
+  Then I should see the edit offsite link "Offsite Thing" on the "Excellent PolicyArea" topic page
 
 Scenario: Featuring offsite content on a topic page
-  Given a topic called "Excellent Topic" exists
-  And I have an offsite link "Offsite Thing" for the topic "Excellent Topic"
-  When I feature the offsite link "Offsite Thing" for topic "Excellent Topic" with image "minister-of-funk.960x640.jpg"
+  Given a topic called "Excellent PolicyArea" exists
+  And I have an offsite link "Offsite Thing" for the topic "Excellent PolicyArea"
+  When I feature the offsite link "Offsite Thing" for topic "Excellent PolicyArea" with image "minister-of-funk.960x640.jpg"
   Then I should see the offsite link featured on the public topic page
 
 Scenario: Adding featured links

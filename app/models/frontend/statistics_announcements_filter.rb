@@ -52,7 +52,7 @@ class Frontend::StatisticsAnnouncementsFilter < FormObject
   end
 
   def policy_areas=(policy_areas)
-    @policy_areas = Topic.where(slug: Array(policy_areas))
+    @policy_areas = PolicyArea.where(slug: Array(policy_areas))
   end
 
   def policy_areas

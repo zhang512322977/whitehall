@@ -1,9 +1,8 @@
-# NB: Topic is being renamed to "Policy Area" across GOV.UK.
 class PolicyAreasController < ClassificationsController
   enable_request_formats show: :atom
 
   def show
-    @classification = Topic.friendly.find(params[:id])
+    @classification = PolicyArea.friendly.find(params[:id])
 
     respond_to do |format|
       format.html do

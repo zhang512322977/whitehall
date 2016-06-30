@@ -16,8 +16,8 @@ module DocumentHelper
     if Organisation.count == 0
       create(:organisation)
     end
-    if Topic.count == 0
-      create(:topic)
+    if PolicyArea.count == 0
+      create(:policy_area)
     end
     visit admin_root_path
     # Make sure the dropdown is visible first, otherwise Capybara won't see the links
@@ -137,7 +137,7 @@ module DocumentHelper
   def select_topic_if_required
     if has_css?(".edition-topic-fields", wait: false)
       within(".edition-topic-fields") do
-        select Topic.first.name, from: "Policy Areas"
+        select PolicyArea.first.name, from: "Policy Areas"
       end
     end
   end
