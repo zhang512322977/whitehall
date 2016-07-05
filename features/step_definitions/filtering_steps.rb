@@ -7,7 +7,7 @@ When(/^I (?:also )?filter by (only )?a publication type$/) do |only|
   select_filter "Publication type", "Guidance", !!only
 end
 
-When(/^I (?:also )?filter by (only )?a topic$/) do |only|
+When(/^I (?:also )?filter by (only )?a policy_area$/) do |only|
   select_filter "PolicyArea", "A PolicyArea", !!only
 end
 
@@ -31,13 +31,13 @@ end
 ### Publications
 
 Given(/^there are some published publications$/) do
-  topic = create :topic, name: "A PolicyArea"
+  policy_area = create :policy_area, name: "A PolicyArea"
   department = create(:ministerial_department, name: "A Department")
   world_location = create(:world_location, name: "A World Location")
 
   create :published_publication, title: "Publication with keyword"
   create :published_guidance, title: "Guidance publication"
-  create :published_publication, title: "Publication with the topic", topics: [topic]
+  create :published_publication, title: "Publication with the policy_area", policy_areas: [policy_area]
   create :published_publication, title: "Publication with the department and keyword", organisations: [department]
   create :published_publication, :with_command_paper, title: "Publication which is a command paper"
   create :published_publication, :with_act_paper, title: "Publication which is an act paper"
@@ -51,7 +51,7 @@ When(/^I visit the publications index page$/) do
   visit publications_path
 end
 
-Then(/^I should be able to filter publications by keyword, publication type, topic, department, official document status, world location, and publication date$/) do
+Then(/^I should be able to filter publications by keyword, publication type, policy_area, department, official document status, world location, and publication date$/) do
   fill_in_filter "Contains", "keyword"
 
   assert_listed_document_count 2
@@ -70,7 +70,7 @@ Then(/^I should be able to filter publications by keyword, publication type, top
 
   select_filter "Policy area", "A PolicyArea", and_clear_others: true
   assert_listed_document_count 1
-  assert page.has_content? "Publication with the topic"
+  assert page.has_content? "Publication with the policy_area"
   assert page.text.match /1 publication about A PolicyArea ./
 
   select_filter "Department", "A Department", and_clear_others: true
@@ -130,40 +130,40 @@ end
 ### Announcements
 
 Given(/^there are some published announcements$/) do
-  topic = create :topic, name: "A PolicyArea"
+  policy_area = create :policy_area, name: "A PolicyArea"
   department = create(:ministerial_department, name: "A Department")
   world_location = create(:world_location, name: "A World Location")
 
-  create :published_news_story, title: "News Article with keyword, topic, department, world location published within date range",
+  create :published_news_story, title: "News Article with keyword, policy_area, department, world location published within date range",
          first_published_at: "2013-02-01",
-         topics: [topic],
+         policy_areas: [policy_area],
          organisations: [department],
          world_locations: [world_location]
-  create :published_fatality_notice, title: "Fatality Notice with keyword, topic, department, world location published within date range",
+  create :published_fatality_notice, title: "Fatality Notice with keyword, policy_area, department, world location published within date range",
          first_published_at: "2013-02-01",
-         topics: [topic],
+         policy_areas: [policy_area],
          organisations: [department],
          world_locations: [world_location]
   create :published_news_story, title: "News Article without wordkey",
          first_published_at: "2013-02-01",
-         topics: [topic],
+         policy_areas: [policy_area],
          organisations: [department],
          world_locations: [world_location]
-  create :published_news_story, title: "News Article with keyword without topic",
+  create :published_news_story, title: "News Article with keyword without policy_area",
          first_published_at: "2013-02-01",
          organisations: [department],
          world_locations: [world_location]
   create :published_news_story, title: "News Article with keyword without department",
          first_published_at: "2013-02-01",
-         topics: [topic],
+         policy_areas: [policy_area],
          world_locations: [world_location]
   create :published_news_story, title: "News Article with keyword without world location",
          first_published_at: "2013-02-01",
-         topics: [topic],
+         policy_areas: [policy_area],
          organisations: [department]
   create :published_news_story, title: "News Article with keyword published out of range",
          first_published_at: "2013-06-01",
-         topics: [topic],
+         policy_areas: [policy_area],
          organisations: [department],
          world_locations: [world_location]
 end
@@ -172,7 +172,7 @@ When(/^I visit the announcements index page$/) do
   visit announcements_path
 end
 
-Then(/^I should be able to filter announcements by keyword, announcement type, topic, department, world location and publication date$/) do
+Then(/^I should be able to filter announcements by keyword, announcement type, policy_area, department, world location and publication date$/) do
   clear_filters
   within '#document-filter' do
     page.fill_in "Contains", with: "keyword"
@@ -186,7 +186,7 @@ Then(/^I should be able to filter announcements by keyword, announcement type, t
   page.click_on "Refresh results"
 
   assert_listed_document_count 1
-  assert page.has_content? "News Article with keyword, topic, department, world location published within date range"
+  assert page.has_content? "News Article with keyword, policy_area, department, world location published within date range"
   assert page.text.match /1 announcement about A PolicyArea . by A Department . from A World Location . containing keyword . published after 01\/01\/2013 published before 01\/03\/2013/
 end
 

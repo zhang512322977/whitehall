@@ -86,7 +86,7 @@ end
 
 When(/^I announce an upcoming statistics publication called "(.*?)"$/) do |announcement_title|
   organisation = Organisation.first || create(:organisation)
-  topic        = PolicyArea.first || create(:policy_area)
+  policy_area        = PolicyArea.first || create(:policy_area)
 
   ensure_path admin_statistics_announcements_path
   click_on "Create announcement"
@@ -95,7 +95,7 @@ When(/^I announce an upcoming statistics publication called "(.*?)"$/) do |annou
   fill_in :statistics_announcement_summary, with: "Summary of publication"
   select_date 1.year.from_now.to_s, from: "Release date"
   select organisation.name, from: :statistics_announcement_organisation_ids
-  select topic.name, from: :statistics_announcement_topic_ids
+  select policy_area.name, from: :statistics_announcement_policy_area_ids
 
   click_on 'Publish announcement'
 end

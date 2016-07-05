@@ -130,7 +130,7 @@ When /^I add a new organisation called "([^"]*)"$/ do |organisation_name|
   fill_in 'Acronym', with: organisation_name.split(' ').collect {|word| word.chars.first }.join
   fill_in 'Logo formatted name', with: organisation_name
   select 'Ministerial department', from: 'Organisation type'
-  select 'Jazz Bizniz', from: 'organisation_topic_ids_0'
+  select 'Jazz Bizniz', from: 'organisation_policy_area_ids_0'
   within '.featured-links' do
     fill_in 'Title', with: 'Top task 1'
     fill_in 'URL', with: 'http://mainstream.co.uk'
@@ -520,12 +520,12 @@ Given /^the topical event "([^"]*)" exists$/ do |name|
   TopicalEvent.create(name: name, description: "test", start_date: Date.today, end_date: Date.today + 2.months)
 end
 
-When /^I feature the topical event "([^"]*)" for "([^"]*)" with image "([^"]*)"$/ do |topic, organisation_name, image_filename|
+When /^I feature the topical event "([^"]*)" for "([^"]*)" with image "([^"]*)"$/ do |topical_event_name, organisation_name, image_filename|
   organisation = Organisation.find_by!(name: organisation_name)
   visit admin_organisation_path(organisation)
   click_link "Features"
   locale = Locale.find_by_language_name("English")
-  topical_event = TopicalEvent.find_by(name: topic)
+  topical_event = TopicalEvent.find_by(name: topical_event_name)
   within record_css_selector(topical_event) do
     click_link "Feature"
   end
@@ -534,11 +534,11 @@ When /^I feature the topical event "([^"]*)" for "([^"]*)" with image "([^"]*)"$
   click_button "Save"
 end
 
-When /^I stop featuring the topical event "([^"]*)" for "([^"]*)"$/ do |topic, organisation_name|
+When /^I stop featuring the topical event "([^"]*)" for "([^"]*)"$/ do |policy_area, organisation_name|
   organisation = Organisation.find_by!(name: organisation_name)
   visit features_admin_organisation_path(organisation)
   locale = Locale.find_by_language_name("English")
-  topical_event = TopicalEvent.find_by(name: topic)
+  topical_event = TopicalEvent.find_by(name: policy_area)
   within record_css_selector(topical_event) do
     click_on "Unfeature"
   end

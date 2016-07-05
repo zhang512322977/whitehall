@@ -15,7 +15,7 @@ When /^I create a new topical event "([^"]*)" with description "([^"]*)" and it 
   create_topical_event(name: name, description: description, start_date: 2.months.ago.to_date.to_s, end_date: Date.today.to_s)
 end
 
-Then /^I should not see the topical event "([^"]*)" on the topics listing$/ do |topical_event_name|
+Then /^I should not see the topical event "([^"]*)" on the policy_areas listing$/ do |topical_event_name|
   topical_event = TopicalEvent.find_by!(name: topical_event_name)
   visit policy_areas_path
   assert page.has_no_css?(record_css_selector(topical_event))

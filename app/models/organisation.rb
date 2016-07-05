@@ -77,9 +77,12 @@ class Organisation < ActiveRecord::Base
   has_many :organisation_classifications,
            -> { order('organisation_classifications.ordering') },
            dependent: :destroy
-  has_many :topics,
+  has_many :policy_areas,
            -> { order('organisation_classifications.ordering') },
            through: :organisation_classifications
+
+  alias_attribute :topics, :policy_areas
+
   has_many :classifications, through: :organisation_classifications
 
   has_many :users, foreign_key: :organisation_slug, primary_key: :slug, dependent: :nullify

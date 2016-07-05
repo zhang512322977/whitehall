@@ -192,7 +192,7 @@ class Admin::EditionsController < Admin::BaseController
       worldwide_organisation_ids: [],
       related_policy_ids: [],
       policy_content_ids: [],
-      topic_ids: [],
+      policy_area_ids: [],
       topical_event_ids: [],
       related_detailed_guide_ids: [],
       role_appointment_ids: [],

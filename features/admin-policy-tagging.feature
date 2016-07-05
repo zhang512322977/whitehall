@@ -12,7 +12,7 @@ Feature: Tagging content with policies
     When I start editing a draft document
     Then I can tag the edition to some policies
 
-  Scenario: a writer can tag a topic to a policy
+  Scenario: a writer can tag a policy_area to a policy
     Given I am a writer
-    When I start creating a topic
-    Then I can tag the topic to some policies
+    When I start creating a policy_area
+    Then I can tag the policy_area to some policies

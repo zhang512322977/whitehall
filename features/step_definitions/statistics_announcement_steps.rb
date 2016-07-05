@@ -34,22 +34,22 @@ Given(/^there is a cancelled statistics announcement, originally due to be publi
                                      precision: StatisticsAnnouncementDate::PRECISION[:exact])
 end
 
-Given(/^there are some statistics announcements for various departments and topics$/) do
+Given(/^there are some statistics announcements for various departments and policy_areas$/) do
   @department = create :ministerial_department
-  @topic = create :topic
+  @policy_area = create :policy_area
 
-  create :statistics_announcement, title: "Announcement for both department and topic", organisation_ids: [@department.id], topics: [@topic]
+  create :statistics_announcement, title: "Announcement for both department and policy_area", organisation_ids: [@department.id], policy_areas: [@policy_area]
   create :statistics_announcement, title: "Announcement for department", organisation_ids: [@department.id]
-  create :statistics_announcement, title: "Announcement for topic", topics: [@topic]
+  create :statistics_announcement, title: "Announcement for policy_area", policy_areas: [@policy_area]
 
 end
 
 Given(/^there is a statistics announcement$/) do
   @organisation = create :ministerial_department
-  @topic = create :topic
+  @policy_area = create :policy_area
   @announcement = create :statistics_announcement,
                          organisation_ids: [@organisation.id],
-                         topics: [@topic],
+                         policy_areas: [@policy_area],
                          statistics_announcement_dates: [build(:statistics_announcement_date, release_date: 1.year.from_now, precision: StatisticsAnnouncementDate::PRECISION[:one_month], created_at: 10.days.ago)],
                          current_release_date: build(:statistics_announcement_date_change, release_date: 1.year.from_now + 2.months, change_note: "A change note")
   @announcement.reload # StatisticsAnnouncement doesn't get statistics_announcement_date related stuff right until after reload.
@@ -72,10 +72,10 @@ When(/^I filter the statistics announcements by keyword, from_date and to_date$/
   end
 end
 
-When(/^I filter the statistics announcements by department and topic$/) do
+When(/^I filter the statistics announcements by department and policy_area$/) do
   within '.filter-form' do
     select @department.name, from: "Department"
-    select @topic.name, from: "Policy Area"
+    select @policy_area.name, from: "Policy Area"
     click_on "Refresh results"
   end
 end
@@ -105,8 +105,8 @@ Then(/^I should only see statistics announcements for those filters$/) do
   assert_equal 1, page.all(".document-list .document-row").length
 end
 
-Then(/^I should only see statistics announcements for the selected departments and topics$/) do
-  assert page.has_content? "Announcement for both department and topic"
+Then(/^I should only see statistics announcements for the selected departments and policy_areas$/) do
+  assert page.has_content? "Announcement for both department and policy_area"
   assert page.has_no_content? "Announcement for department"
-  assert page.has_no_content? "Announcement for topic"
+  assert page.has_no_content? "Announcement for policy_area"
 end

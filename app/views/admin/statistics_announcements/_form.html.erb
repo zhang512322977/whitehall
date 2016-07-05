@@ -27,9 +27,9 @@
                   { }, multiple: true, class: 'chzn-select form-control' %>
   </div>
   <div class="form-group stats-chosen-wrapper">
-    <%= form.label  :topic_ids, 'Policy Areas', required: true %>
-    <%= form.select :topic_ids,
-                  options_for_select(taggable_topics_container, statistics_announcement.topic_ids),
+    <%= form.label :policy_area_ids, 'Policy Areas', required: true %>
+    <%= form.select :policy_area_ids,
+                  options_for_select(taggable_topics_container, statistics_announcement.policy_area_ids),
                   { prompt: 'Select a topic' },
                   multiple: true,
                   class: 'chzn-select form-control' %>

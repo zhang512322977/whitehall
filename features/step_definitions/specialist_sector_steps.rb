@@ -13,23 +13,23 @@ Then /^I can tag it to some specialist sectors$/ do
 end
 
 Given(/^there is a document tagged to specialist sectors$/) do
-  unstub_tag_finder # we're testing topic tags, remove any existing stubs
+  unstub_tag_finder # we're testing policy_area tags, remove any existing stubs
 
   @document = create(:published_publication, :guidance)
   document_base_path = PublishingApiPresenters.presenter_for(@document).base_path
-  parent_base_path = "/parent-topic"
+  parent_base_path = "/parent-policy_area"
 
   document_content_item = content_item_for_base_path(document_base_path).merge!({
     "links" => {
       "parent" => [{ "base_path" => parent_base_path }],
-      "topics" => [{ "title" => "PolicyArea 1" }, { "title" => "PolicyArea 2"  }]
+      "policy_areas" => [{ "title" => "PolicyArea 1" }, { "title" => "PolicyArea 2"  }]
     }
   })
   parent_content_item = content_item_for_base_path(parent_base_path).merge!({
     "links" => {
       "parent" => [{
         "title" => "Top Level PolicyArea",
-        "web_url" => "http://gov.uk/top-level-topic"
+        "web_url" => "http://gov.uk/top-level-policy_area"
       }]
     }
   })

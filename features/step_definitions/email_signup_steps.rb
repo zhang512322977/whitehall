@@ -53,9 +53,9 @@ Then(/^I should be signed up for the "(.*?)" topical event mailing list$/) do |t
   assert_signed_up_to_mailing_list("/government/topical-events/#{topical_event_slug}.atom", topical_event_name)
 end
 
-Then(/^I should be signed up for the "(.*?)" topic mailing list$/) do |topic_name|
-  topic_slug = PolicyArea.find_by!(name: topic_name).slug
-  assert_signed_up_to_mailing_list("/government/topics/#{topic_slug}.atom", topic_name)
+Then(/^I should be signed up for the "(.*?)" policy_area mailing list$/) do |policy_area_name|
+  policy_area_slug = PolicyArea.find_by!(name: policy_area_name).slug
+  assert_signed_up_to_mailing_list("/government/policy_areas/#{policy_area_slug}.atom", policy_area_name)
 end
 
 Then(/^I should be signed up for the "(.*?)" world location mailing list$/) do |world_location_name|
@@ -89,7 +89,7 @@ end
 
 def mock_govuk_delivery_client
   @mock_client ||= RetrospectiveStub.new.tap { |mock_client|
-    mock_client.stub :topic
+    mock_client.stub :policy_area
     mock_client.stub :signup_url, returns: 'http://govdelivery.url'
     mock_client.stub :notify
     Whitehall.stubs(govuk_delivery_client: mock_client)
@@ -98,6 +98,6 @@ end
 
 def assert_signed_up_to_mailing_list(feed_path, description)
   @feed_signed_up_to = public_url(feed_path)
-  mock_govuk_delivery_client.assert_method_called(:topic, with: [@feed_signed_up_to, description])
+  mock_govuk_delivery_client.assert_method_called(:policy_area, with: [@feed_signed_up_to, description])
   mock_govuk_delivery_client.assert_method_called(:signup_url, with: [@feed_signed_up_to])
 end

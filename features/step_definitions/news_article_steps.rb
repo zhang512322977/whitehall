@@ -40,13 +40,13 @@ When /^I publish a news article "([^"]*)" associated with "([^"]*)"$/ do |title,
   publish(force: true)
 end
 
-When /^I publish a news article "([^"]*)" associated with the (topic|topical event) "([^"]*)"$/ do |title, type, topic_name|
-  begin_drafting_news_article title: title, skip_topic_selection: (type == 'topic')
+When /^I publish a news article "([^"]*)" associated with the (policy_area|topical event) "([^"]*)"$/ do |title, type, classification_name|
+  begin_drafting_news_article title: title, skip_policy_area_selection: (type == 'policy_area')
 
-  if type == 'topic'
-    select topic_name, from: "Policy Areas"
+  if type == 'policy_area'
+    select classification_name, from: "Policy Areas"
   else
-    select topic_name, from: "Topical events"
+    select classification_name, from: "Topical events"
   end
 
   fill_in_news_article_fields(first_published: Date.today.to_s)

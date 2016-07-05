@@ -61,28 +61,28 @@ When(/^I should only see statistics matching the given keyword, from date and to
   assert_equal 1, page.all(".document-list .document-row").length
 end
 
-Given(/^there are some statisics for various departments and topics$/) do
-  beard_topic = create(:policy_area, name: 'Beards')
-  wombat_topic = create(:policy_area, name: 'Wombats')
+Given(/^there are some statisics for various departments and policy_areas$/) do
+  beard_policy_area = create(:policy_area, name: 'Beards')
+  wombat_policy_area = create(:policy_area, name: 'Wombats')
 
   beard_org = create(:ministerial_department, name: 'Ministry of Beards')
   wombat_org = create(:ministerial_department, name: 'Wombats of Wimbledon')
 
   create :published_statistics, title: '2015 Average beard lengths figures',
-                                topics: [beard_topic],
+                                policy_areas: [beard_policy_area],
                                 organisations: [beard_org]
 
   create :published_statistics, title: 'Average beard lengths of wombat organisations',
-                                topics: [beard_topic, wombat_topic],
+                                policy_areas: [beard_policy_area, wombat_policy_area],
                                 organisations: [wombat_org]
 
   create :published_statistics, title: 'Wombat population levels',
-                                topics: [wombat_topic],
+                                policy_areas: [wombat_policy_area],
                                 organisations: [wombat_org]
 
 end
 
-When(/^I filter the statistics by department and topic$/) do
+When(/^I filter the statistics by department and policy_area$/) do
   within '.filter-form' do
     select "Beards", from: "Policy area"
     select "Wombats of Wimbledon", from: "Department"
@@ -90,7 +90,7 @@ When(/^I filter the statistics by department and topic$/) do
   end
 end
 
-Then(/^I should only see statistics for the selected departments and topics$/) do
+Then(/^I should only see statistics for the selected departments and policy_areas$/) do
   within('.filter-results') do
     assert page.has_content? "Average beard lengths of wombat organisations"
     assert page.has_no_content? "2015 Average beard lengths figures"

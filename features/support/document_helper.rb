@@ -31,7 +31,7 @@ module DocumentHelper
       fill_in "edition_body", with: options.fetch(:body, "Any old iron")
       fill_in "edition_summary", with: options.fetch(:summary, 'one plus one euals two!')
       fill_in_change_note_if_required
-      select_topic_if_required unless options[:skip_topic_selection]
+      select_policy_area_if_required unless options[:skip_policy_area_selection]
 
       unless options[:type] == 'world_location_news_article'
         set_lead_organisation_on_document(Organisation.first)
@@ -134,9 +134,9 @@ module DocumentHelper
     end
   end
 
-  def select_topic_if_required
-    if has_css?(".edition-topic-fields", wait: false)
-      within(".edition-topic-fields") do
+  def select_policy_area_if_required
+    if has_css?(".edition-policy_area-fields", wait: false)
+      within(".edition-policy_area-fields") do
         select PolicyArea.first.name, from: "Policy Areas"
       end
     end

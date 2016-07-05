@@ -80,9 +80,9 @@
     <h3>Policy Areas</h3>
     <% organisation_form.object.organisation_classifications.each do |ot| %>
       <p>
-        <%= label_tag "organisation_topic_ids_#{ot.ordering}" do %>
+        <%= label_tag "organisation_policy_area_ids_#{ot.ordering}" do %>
           Policy Area <%= ot.ordering + 1 %>
-          <%= select_tag "organisation[organisation_classifications_attributes][][classification_id]", options_from_collection_for_select(Classification.all, 'id', 'name', ot.classification_id), include_blank: true, multiple: false, class: 'chzn-select form-control', data: { placeholder: "Choose policy areas…"}, id: "organisation_topic_ids_#{ot.ordering}" %>
+          <%= select_tag "organisation[organisation_classifications_attributes][][classification_id]", options_from_collection_for_select(Classification.all, 'id', 'name', ot.classification_id), include_blank: true, multiple: false, class: 'chzn-select form-control', data: { placeholder: "Choose policy areas…"}, id: "organisation_policy_area_ids_#{ot.ordering}" %>
           <%= hidden_field_tag "organisation[organisation_classifications_attributes][][ordering]", ot.ordering %>
           <%= hidden_field_tag "organisation[organisation_classifications_attributes][][id]", ot.id %>
         <% end %>

@@ -14,20 +14,20 @@ Given /^a published document "([^"]*)" exists$/ do |title|
   create(:published_publication, title: title)
 end
 
-Given /^a draft (publication|news article|consultation) "([^"]*)" exists in the "([^"]*)" topic$/ do |document_type, title, topic_name|
-  topic = PolicyArea.find_by!(name: topic_name)
-  create("draft_#{document_class(document_type).name.underscore}".to_sym, title: title, topics: [topic])
+Given /^a draft (publication|news article|consultation) "([^"]*)" exists in the "([^"]*)" policy_area$/ do |document_type, title, policy_area_name|
+  policy_area = PolicyArea.find_by!(name: policy_area_name)
+  create("draft_#{document_class(document_type).name.underscore}".to_sym, title: title, policy_areas: [policy_area])
 end
 
-Given /^a submitted (publication|news article|consultation|detailed guide) "([^"]*)" exists in the "([^"]*)" topic$/ do |document_type, title, topic_name|
+Given /^a submitted (publication|news article|consultation|detailed guide) "([^"]*)" exists in the "([^"]*)" policy_area$/ do |document_type, title, policy_area_name|
   create(:government)
-  topic = PolicyArea.find_by!(name: topic_name)
-  create("submitted_#{document_class(document_type).name.underscore}".to_sym, title: title, topics: [topic])
+  policy_area = PolicyArea.find_by!(name: policy_area_name)
+  create("submitted_#{document_class(document_type).name.underscore}".to_sym, title: title, policy_areas: [policy_area])
 end
 
-Given /^a published (publication|news article|consultation) "([^"]*)" exists in the "([^"]*)" topic$/ do |document_type, title, topic_name|
-  topic = PolicyArea.find_by!(name: topic_name)
-  create("published_#{document_class(document_type).name.underscore}".to_sym, title: title, topics: [topic])
+Given /^a published (publication|news article|consultation) "([^"]*)" exists in the "([^"]*)" policy_area$/ do |document_type, title, policy_area_name|
+  policy_area = PolicyArea.find_by!(name: policy_area_name)
+  create("published_#{document_class(document_type).name.underscore}".to_sym, title: title, policy_areas: [policy_area])
 end
 
 Given /^a draft (publication|news article|consultation) "([^"]*)" was produced by the "([^"]*)" organisation$/ do |document_type, title, organisation_name|
@@ -207,10 +207,10 @@ Then /^(#{THE_DOCUMENT}) should be visible to the public$/ do |edition|
   assert page.has_css?(record_css_selector(edition), text: edition.title)
 end
 
-Then /^I should see in the preview that "([^"]*)" should be in the "([^"]*)" and "([^"]*)" topics$/ do |title, first_topic, second_topic|
+Then /^I should see in the preview that "([^"]*)" should be in the "([^"]*)" and "([^"]*)" policy_areas$/ do |title, first_policy_area, second_policy_area|
   visit_document_preview title
-  assert has_css?(".meta a", text: first_topic, exact: false)
-  assert has_css?(".meta a", text: second_topic, exact: false)
+  assert has_css?(".meta a", text: first_policy_area, exact: false)
+  assert has_css?(".meta a", text: second_policy_area, exact: false)
 end
 
 Then /^I should see in the preview that "([^"]*)" was produced by the "([^"]*)" and "([^"]*)" organisations$/ do |title, first_org, second_org|

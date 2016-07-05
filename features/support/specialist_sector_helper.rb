@@ -2,7 +2,7 @@ require 'gds_api/test_helpers/content_api'
 require "gds_api/test_helpers/content_store"
 
 Before do
-  # Assume documents rendered in these features have no topic tags.
+  # Assume documents rendered in these features have no policy_area tags.
   # Stub can be removed in individual features if required.
   SpecialistTagFinder.stubs(:new).returns(SpecialistTagFinder::Null.new)
 end

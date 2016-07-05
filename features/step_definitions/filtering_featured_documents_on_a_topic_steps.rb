@@ -1,16 +1,16 @@
-Given(/^there is a topic with published documents$/) do
-  @topic = create(:policy_area, name: "A PolicyArea")
+Given(/^there is a policy_area with published documents$/) do
+  @policy_area = create(:policy_area, name: "A PolicyArea")
   department = create(:ministerial_department, name: "A Department")
 
-  create(:published_publication, title: "Publication #1", topics: [@topic])
-  create(:published_publication, title: "Publication #2", topics: [@topic], organisations: [department])
-  create(:published_news_article, title: "News #1", topics: [@topic])
+  create(:published_publication, title: "Publication #1", policy_areas: [@policy_area])
+  create(:published_publication, title: "Publication #2", policy_areas: [@policy_area], organisations: [department])
+  create(:published_news_article, title: "News #1", policy_areas: [@policy_area])
 
-  @news = create(:published_news_article, title: "News #2", topics: [@topic])
+  @news = create(:published_news_article, title: "News #2", policy_areas: [@policy_area])
 end
 
-When(/^I view featured documents for that topic$/) do
-  visit admin_topic_classification_featurings_url(@topic)
+When(/^I view featured documents for that policy_area$/) do
+  visit admin_policy_area_classification_featurings_url(@policy_area)
   page.click_on "Reset all fields"
 end
 

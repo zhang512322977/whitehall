@@ -2,7 +2,7 @@ Given /^a detailed guide with section headings$/ do
   create(:published_detailed_guide,
          title: "Detailed guide with pages",
          summary: "Here's the summary of the guide",
-         topics: [create(:policy_area)],
+         policy_areas: [create(:policy_area)],
          body: <<-EOS
 ## Page 1
 
