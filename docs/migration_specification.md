@@ -73,7 +73,68 @@ This contains the details for the content item. These differ by format and are d
 
 ## details.first_public_at
 
-**Deprecated?**
+For a published document this is the first_public_at for the Edition.
+For a draft this is set to `document.created_at`.
 
+This should be deprecated when publishing API can define first published.
 
+**this need discussion because the logic seems a bit odd**
 
+## details.change_history
+
+This is displayed at the bottom of the page. It is also used to derive the 'Last updated' value in the metadata component. This is generated from a `DocumentHistory` object associated with the `Edition`.
+
+Eg
+
+```
+[
+  {
+    "public_timestamp": "2016-02-08T17:36:26+00:00",
+    "note": "Liberia removed - Council Regulation (EC) No 872/2004 imposing financial sanctions against Liberia has been repealed with effect from 6 October 2015."
+  },
+  { ... }
+]
+```
+
+## details.tags
+
+**deprecated**
+
+This was used downstream by email alerts service, which subscribes to RabbitMQ messages from publishing API. The fields now live in the `links` hash and email alerts service looks in both places.
+
+## details.government
+
+This is used to determine whether the document is in "history mode". If a document is political and was published by a previous government, a banner is displayed at the top of the page.
+
+Comes from a `Government` object associated with the `Edition` 
+
+See `political`.
+
+Eg
+
+```
+"government": {
+  "title": "2010 to 2015 Conservative and Liberal Democrat coalition government",
+  "slug": "2010-to-2015-conservative-and-liberal-democrat-coalition-government",
+  "current": false
+}
+```
+
+## details.political
+
+This is used in conjunction with `government` to determine whether the document is in "history mode".
+Comes from the `Edition` in Whitehall.
+
+Eg `"political": false`
+
+## details.emphasised_organisations
+
+This is used to tell which of the organisations in the `links` hash should appear first in the metadata component.
+
+Eg `"emphasised_organisations": ["1994e0e4-bd19-4966-bbd7-f293d6e90a6b"]`
+
+## details.body
+
+This is the rendered HTML content of the govspeak for the content item.
+
+It is generated in Whitehall using the `Whitehall::GovspeakRenderer#govspeak_edition_to_html` 
