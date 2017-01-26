@@ -1,4 +1,7 @@
-#!/bin/bash -xe
+#!/usr/bin/env bash 
+
+set -xe
+
 export DISPLAY=:99
 env
 
@@ -43,13 +46,13 @@ mkdir -p ./attachment-cache
 
 # Clone govuk-content-schemas depedency for contract tests
 rm -rf tmp/govuk-content-schemas
-git clone --branch deployed-to-production git@github.com:alphagov/govuk-content-schemas.git tmp/govuk-content-schemas
+git clone --branch deployed-to-production https://github.com/alphagov/govuk-content-schemas.git tmp/govuk-content-schemas
 
-time bundle install --path "${HOME}/bundles/${JOB_NAME}" --deployment
+time /usr/lib/rbenv/shims/bundle install --path "${HOME}/bundles/whitehall" --deployment
 
 # Lint changes introduced in this branch, but not for master
 if [[ ${GIT_BRANCH} != "origin/master" ]]; then
-  bundle exec govuk-lint-ruby \
+  /usr/lib/rbenv/shims/bundle exec govuk-lint-ruby \
     --diff \
     --cached \
     --format html --out rubocop-${GIT_COMMIT}.html \
@@ -57,9 +60,9 @@ if [[ ${GIT_BRANCH} != "origin/master" ]]; then
     app test lib
 fi
 
-RAILS_ENV=test bundle exec rake db:drop db:create db:schema:load
-RAILS_ENV=test GOVUK_CONTENT_SCHEMAS_PATH=tmp/govuk-content-schemas time bundle exec rake ci:setup:minitest test:in_parallel --trace
-RAILS_ENV=production GOVUK_ASSET_ROOT=http://static.test.alphagov.co.uk time bundle exec rake assets:precompile --trace
+RAILS_ENV=test /usr/lib/rbenv/shims/bundle exec rake db:drop db:create db:schema:load
+RAILS_ENV=test GOVUK_CONTENT_SCHEMAS_PATH=tmp/govuk-content-schemas time /usr/lib/rbenv/shims/bundle exec rake ci:setup:minitest test:in_parallel --trace
+RAILS_ENV=production GOVUK_ASSET_ROOT=http://static.test.alphagov.co.uk time /usr/lib/rbenv/shims/bundle exec rake assets:precompile --trace
 
 EXIT_STATUS=$?
 echo "EXIT STATUS: $EXIT_STATUS"
