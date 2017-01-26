@@ -20,12 +20,12 @@ function error_handler {
   else
     echo "Error on or near line ${parent_lineno}; exiting with status ${code}"
   fi
-  github_status failure "failed on Jenkins"
+ # github_status failure "failed on Jenkins"
   exit "${code}"
 }
 
-trap "error_handler ${LINENO}" ERR
-github_status pending "is running on Jenkins"
+# trap "error_handler ${LINENO}" ERR
+# github_status pending "is running on Jenkins"
 
 # Ensure there are no artefacts left over from previous builds
 git clean -fdx
@@ -64,10 +64,10 @@ RAILS_ENV=production GOVUK_ASSET_ROOT=http://static.test.alphagov.co.uk time bun
 EXIT_STATUS=$?
 echo "EXIT STATUS: $EXIT_STATUS"
 
-if [ "$EXIT_STATUS" == "0" ]; then
-  github_status success "succeeded on Jenkins"
-else
-  github_status failure "failed on Jenkins"
-fi
+# if [ "$EXIT_STATUS" == "0" ]; then
+#   github_status success "succeeded on Jenkins"
+# else
+#   github_status failure "failed on Jenkins"
+# fi
 
 exit $EXIT_STATUS
