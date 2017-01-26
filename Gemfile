@@ -86,6 +86,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'govuk-lint', '~> 0.5.1'
   gem 'dotenv-rails'
+  gem 'stackprof', require: false
 end
 
 group :development do
@@ -93,7 +94,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'newrelic_rpm'
   gem 'quiet_assets'
-  gem 'stackprof', require: false
   gem 'graphviz_transitions'
 end
 

@@ -21,6 +21,7 @@ require 'whitehall/not_quite_as_fake_search'
 require 'whitehall/search_index'
 require 'sidekiq/testing/inline'
 require 'govuk-content-schema-test-helpers/test_unit'
+require 'stackprof'
 
 Dir[Rails.root.join('test/support/*.rb')].each { |f| require f }
 
@@ -41,6 +42,17 @@ class ActiveSupport::TestCase
   include PolicyTaggingHelpers
   include GovukContentSchemaTestHelpers::TestUnit
   extend GovspeakValidationTestHelper
+
+  def around(&block)
+    example = block.call
+
+    %i(wall cpu object).each do |mode|
+      basename = ['tmp', example.to_s].join('/')
+      dump = Dir::Tmpname.make_tmpname([basename, '.dump'], mode)
+
+      StackProf.run(mode: mode, out: dump, &block)
+    end
+  end
 
   setup do
     Timecop.freeze(2011, 11, 11, 11, 11, 11)
