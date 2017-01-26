@@ -213,6 +213,9 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.10.0)
+    knapsack (1.13.1)
+      rake
+      timecop (>= 0.1.0)
     kramdown (1.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -493,6 +496,7 @@ DEPENDENCIES
   jbuilder
   jquery-ui-rails
   kaminari (= 0.15.1)
+  knapsack
   launchy (~> 2.4.3)
   link_header
   logstasher (= 0.6.2)

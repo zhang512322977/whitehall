@@ -79,6 +79,10 @@ node {
       sh("RAILS_ENV=test bundle exec rake db:drop db:create db:schema:load")
     }
 
+    stage("Generate time execution report for test files") {
+      sh("KNAPSACK_GENERATE_REPORT=true RAILS_ENV=test bundle exec mtest -Itest test")
+    }
+
     stage("Run tests") {
       sh("RAILS_ENV=test bundle exec rake ci:setup:minitest test:in_parallel --trace")
       sh("RAILS_ENV=production GOVUK_ASSET_ROOT=http://static.test.alphagov.co.uk bundle exec rake assets:precompile --trace")

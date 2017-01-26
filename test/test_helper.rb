@@ -3,6 +3,8 @@ ENV["RAILS_ENV"] = "test"
 ENV["GOVUK_APP_DOMAIN"] = "test.alphagov.co.uk"
 ENV["GOVUK_ASSET_ROOT"] = "http://static.test.alphagov.co.uk"
 
+require 'knapsack'
+
 require File.expand_path('../../config/environment', __FILE__)
 
 if ENV["TEST_COVERAGE"]
@@ -249,3 +251,7 @@ class PresenterTestCase < ActionView::TestCase
     @view_context.stubs(*args)
   end
 end
+
+Knapsack::Adapters::MinitestAdapter
+  .bind
+  .set_test_helper_path(__FILE__)

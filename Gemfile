@@ -86,6 +86,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'govuk-lint', '~> 0.5.1'
   gem 'dotenv-rails'
+  gem 'knapsack'
 end
 
 group :development do
