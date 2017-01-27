@@ -51,14 +51,14 @@ git clone --branch deployed-to-production https://github.com/alphagov/govuk-cont
 time /usr/lib/rbenv/shims/bundle install --path "${HOME}/bundles/whitehall" --deployment
 
 # Lint changes introduced in this branch, but not for master
-if [[ ${GIT_BRANCH} != "origin/master" ]]; then
-  /usr/lib/rbenv/shims/bundle exec govuk-lint-ruby \
-    --diff \
-    --cached \
-    --format html --out rubocop-${GIT_COMMIT}.html \
-    --format clang \
-    app test lib
-fi
+# if [[ ${GIT_BRANCH} != "origin/master" ]]; then
+#   /usr/lib/rbenv/shims/bundle exec govuk-lint-ruby \
+#     --diff \
+#     --cached \
+#     --format html --out rubocop-${GIT_COMMIT}.html \
+#     --format clang \
+#     app test lib
+# fi
 
 RAILS_ENV=test /usr/lib/rbenv/shims/bundle exec rake db:drop db:create db:schema:load
 RAILS_ENV=test GOVUK_CONTENT_SCHEMAS_PATH=tmp/govuk-content-schemas time /usr/lib/rbenv/shims/bundle exec rake ci:setup:minitest test:in_parallel --trace
