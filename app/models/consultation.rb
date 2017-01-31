@@ -52,16 +52,25 @@ class Consultation < Publicationesque
 
   # A consultation changes outside the edition workflow when it opens or
   # closes. We need to republish the consultation at these times to ensure
-  # changes are reflected in any external systems.
+  # changes are reflected in any external systems. We also need to signal
+  # our intent to publish so that upstream caches can be prepared accordingly.
   after_save do
+    scheduling_lead_time = 1.hour
+
     if opening_at.try(:future?)
       PublishingApiDocumentRepublishingWorker
         .perform_at(opening_at, document.id)
+
+      PublishingApiScheduleWorker
+        .perform_at(opening_at - scheduling_lead_time, base_path, opening_at)
     end
 
     if closing_at.try(:future?)
       PublishingApiDocumentRepublishingWorker
         .perform_at(closing_at, document.id)
+
+      PublishingApiScheduleWorker
+        .perform_at(closing_at - scheduling_lead_time, base_path, closing_at)
     end
   end
 
@@ -155,6 +164,12 @@ class Consultation < Publicationesque
   def allows_html_attachments?
     true
   end
+
+  def public_path
+    Whitehall.url_maker.consultation_path(self)
+  end
+
+  alias_method :base_path, :public_path
 
   private
 

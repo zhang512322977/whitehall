@@ -362,38 +362,74 @@ class ConsultationTest < ActiveSupport::TestCase
   end
 
   test "#save triggers consultation opening in the future to be republished twice" do
+    base_path = stub
+    document_id = stub
+
     opening_at = 2.days.from_now
     closing_at = 3.days.from_now
 
-    consultation = create(:consultation, opening_at: opening_at, closing_at: closing_at)
+    document = Document.new
+    document.stubs(id: document_id)
+
+    consultation = build(:consultation, opening_at: opening_at, closing_at: closing_at)
+    consultation.stubs(:base_path).returns(base_path)
+    consultation.stubs(:document).returns(document)
 
     PublishingApiDocumentRepublishingWorker
       .expects(:perform_at)
-      .with(opening_at, consultation.document.id)
+      .with(opening_at, document_id)
       .once
 
     PublishingApiDocumentRepublishingWorker
       .expects(:perform_at)
-      .with(closing_at, consultation.document.id)
+      .with(closing_at, document_id)
+      .once
+
+    PublishingApiScheduleWorker
+      .expects(:perform_at)
+      .with(opening_at - 1.hour, base_path, opening_at)
+      .once
+
+    PublishingApiScheduleWorker
+      .expects(:perform_at)
+      .with(closing_at - 1.hour, base_path, closing_at)
       .once
 
     consultation.save
   end
 
   test "#save triggers consultation closing in the future to be republished once" do
+    base_path = stub
+    document_id = stub
+
     opening_at = 2.days.ago
     closing_at = 3.days.from_now
 
-    consultation = create(:consultation, opening_at: opening_at, closing_at: closing_at)
+    document = Document.new
+    document.stubs(id: document_id)
+
+    consultation = build(:consultation, opening_at: opening_at, closing_at: closing_at)
+    consultation.stubs(:base_path).returns(base_path)
+    consultation.stubs(:document).returns(document)
 
     PublishingApiDocumentRepublishingWorker
       .expects(:perform_at)
-      .with(opening_at, consultation.document.id)
+      .with(opening_at, document_id)
       .never
 
     PublishingApiDocumentRepublishingWorker
       .expects(:perform_at)
-      .with(closing_at, consultation.document.id)
+      .with(closing_at, document_id)
+      .once
+
+    PublishingApiScheduleWorker
+      .expects(:perform_at)
+      .with(opening_at - 1.hour, base_path, opening_at)
+      .never
+
+    PublishingApiScheduleWorker
+      .expects(:perform_at)
+      .with(closing_at - 1.hour, base_path, closing_at)
       .once
 
     consultation.save
