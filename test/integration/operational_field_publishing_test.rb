@@ -7,6 +7,7 @@ class OperationalFieldPublishingTest < ActiveSupport::TestCase
 
   setup do
     DatabaseCleaner.clean_with :truncation
+    Sidekiq::Testing.inline!
     stub_any_publishing_api_call
   end
 

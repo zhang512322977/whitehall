@@ -2,6 +2,8 @@ require "test_helper"
 
 class UnpublishingTest < ActiveSupport::TestCase
   setup do
+    Sidekiq::Testing.inline!
+
     @published_edition = create(:published_case_study)
     stub_any_publishing_api_call
   end

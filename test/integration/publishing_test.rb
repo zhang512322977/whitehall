@@ -5,6 +5,8 @@ class PublishingTest < ActiveSupport::TestCase
   include GdsApi::TestHelpers::PublishingApiV2
 
   setup do
+    Sidekiq::Testing.inline!
+
     @draft_edition = create(:draft_edition)
     @presenter = PublishingApiPresenters.presenter_for(@draft_edition)
   end

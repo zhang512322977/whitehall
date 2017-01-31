@@ -7,6 +7,8 @@ class RequestTracingTest < ActionDispatch::IntegrationTest
     @presenter = PublishingApiPresenters.presenter_for(@draft_edition)
     login_as(create(:gds_admin))
 
+    Sidekiq::Testing.inline!
+
     # Use the real GovUkDelivery client
     Whitehall.govuk_delivery_client = GdsApi::GovUkDelivery.new(Plek.find('govuk-delivery'))
 

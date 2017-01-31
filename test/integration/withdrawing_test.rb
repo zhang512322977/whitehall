@@ -2,6 +2,10 @@ require "test_helper"
 require "gds_api/test_helpers/publishing_api"
 
 class WithdrawingTest < ActiveSupport::TestCase
+  setup do
+    Sidekiq::Testing.inline!
+  end
+
   test "When an edition is withdrawn, it gets republished to the Publishing API with an withdrawn notice" do
     edition   = create(:published_case_study)
     edition.build_unpublishing(explanation: 'Old information',

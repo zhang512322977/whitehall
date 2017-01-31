@@ -19,7 +19,7 @@ require 'factories'
 require 'webmock/minitest'
 require 'whitehall/not_quite_as_fake_search'
 require 'whitehall/search_index'
-require 'sidekiq/testing/inline'
+require 'sidekiq/testing'
 require 'govuk-content-schema-test-helpers/test_unit'
 
 Dir[Rails.root.join('test/support/*.rb')].each { |f| require f }
@@ -43,10 +43,10 @@ class ActiveSupport::TestCase
   extend GovspeakValidationTestHelper
 
   setup do
+    Sidekiq::Testing.fake!
     Timecop.freeze(2011, 11, 11, 11, 11, 11)
     Whitehall.search_backend = Whitehall::DocumentFilter::FakeSearch
     VirusScanHelpers.erase_test_files
-    Sidekiq::Worker.clear_all
     fake_whodunnit = FactoryGirl.build(:user)
     fake_whodunnit.stubs(:id).returns(1000)
     fake_whodunnit.stubs(:persisted?).returns(true)

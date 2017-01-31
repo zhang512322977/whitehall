@@ -5,6 +5,7 @@ class GovUkDeliveryTest < ActiveSupport::TestCase
   include GdsApi::TestHelpers::GovUkDelivery
 
   setup do
+    Sidekiq::Testing.inline!
     # Use the real GovUkDelivery client
     Whitehall.govuk_delivery_client = GdsApi::GovUkDelivery.new(Plek.find('govuk-delivery'))
   end

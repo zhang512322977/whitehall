@@ -4,6 +4,7 @@ class ContactTest < ActiveSupport::TestCase
   self.use_transactional_fixtures = false
 
   setup do
+    Sidekiq::Testing.inline!
     stub_any_publishing_api_call
 
     @organisation_content_id = SecureRandom.uuid

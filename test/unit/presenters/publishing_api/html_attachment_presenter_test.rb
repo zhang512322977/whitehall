@@ -12,6 +12,8 @@ class PublishingApi::HtmlAttachmentPresenterTest < ActiveSupport::TestCase
   end
 
   test "HtmlAttachment presentation includes the correct values" do
+    Sidekiq::Testing.inline!
+
     edition = create(:publication, :with_html_attachment, :published)
     html_attachment = HtmlAttachment.last
 

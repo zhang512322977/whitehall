@@ -7,6 +7,7 @@ class TakePartPageTest < ActiveSupport::TestCase
 
   setup do
     DatabaseCleaner.clean_with :truncation
+    Sidekiq::Testing.inline!
     stub_any_publishing_api_call
     @take_part_page = build(:take_part_page)
   end
