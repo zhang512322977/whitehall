@@ -1,4 +1,5 @@
 require "test_helper"
+require "sidekiq/testing/inline"
 
 class ContactTest < ActiveSupport::TestCase
   self.use_transactional_fixtures = false

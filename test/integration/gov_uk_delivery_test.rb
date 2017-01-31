@@ -1,4 +1,5 @@
 require "test_helper"
+require "sidekiq/testing/inline"
 require 'gds_api/test_helpers/gov_uk_delivery'
 
 class GovUkDeliveryTest < ActiveSupport::TestCase

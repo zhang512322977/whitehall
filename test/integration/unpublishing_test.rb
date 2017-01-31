@@ -1,4 +1,5 @@
 require "test_helper"
+require "sidekiq/testing/inline"
 
 class UnpublishingTest < ActiveSupport::TestCase
   setup do

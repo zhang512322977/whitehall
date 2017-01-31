@@ -1,4 +1,5 @@
 require "test_helper"
+require "sidekiq/testing/inline"
 require "gds_api/test_helpers/publishing_api_v2"
 
 class StatisticsAnnouncementTest < ActiveSupport::TestCase

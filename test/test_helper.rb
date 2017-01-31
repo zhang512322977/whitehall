@@ -19,7 +19,7 @@ require 'factories'
 require 'webmock/minitest'
 require 'whitehall/not_quite_as_fake_search'
 require 'whitehall/search_index'
-require 'sidekiq/testing/inline'
+require 'sidekiq/testing'
 require 'govuk-content-schema-test-helpers/test_unit'
 
 Dir[Rails.root.join('test/support/*.rb')].each { |f| require f }
