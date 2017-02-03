@@ -64,7 +64,6 @@ module PublishingApi
       }
       details_hash = maybe_add_national_applicability(details_hash)
       details_hash.merge!(PayloadBuilder::PoliticalDetails.for(item))
-      details_hash.merge!(PayloadBuilder::WithdrawnNotice.for(item))
       details_hash.merge!(PayloadBuilder::TagDetails.for(item))
       details_hash.merge!(PayloadBuilder::FirstPublicAt.for(item))
     end

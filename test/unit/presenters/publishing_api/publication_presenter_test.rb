@@ -165,9 +165,9 @@ class PublishingApi::PublicationPresenterTest < ActiveSupport::TestCase
     presented_item = present(publication)
 
     assert_valid_against_schema(presented_item.content, 'publication')
-    assert_equal archive_notice[:archived_at], presented_item.content[:details][:withdrawn_notice][:withdrawn_at]
+    assert_equal archive_notice[:archived_at], presented_item.content[:withdrawn_notice][:withdrawn_at]
     assert_equivalent_html archive_notice[:explanation],
-      presented_item.content[:details][:withdrawn_notice][:explanation]
+      presented_item.content[:withdrawn_notice][:explanation]
   end
 
   test "documents include the alternative format contact email" do
