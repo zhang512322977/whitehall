@@ -45,9 +45,7 @@ module Taxonomy
     end
 
     def descendants
-      tree.tap do |tree_without_self|
-        tree_without_self.shift
-      end
+      tree.tap(&:shift)
     end
 
     def count
@@ -67,5 +65,4 @@ module Taxonomy
       content_item["content_id"]
     end
   end
-
 end
