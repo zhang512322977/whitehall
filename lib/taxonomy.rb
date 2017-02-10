@@ -21,12 +21,8 @@ module Taxonomy
       child_taxons = content_item["links"]["child_taxons"]
 
       if child_taxons.present?
-        child_nodes = child_taxons.map do |child|
-          TreeNode.new(name_field: name_field, content_item: child)
-        end
-
-        child_nodes.each do |child_node|
-          self << child_node
+        child_taxons.map do |child|
+          self << TreeNode.new(name_field: name_field, content_item: child)
         end
       end
     end

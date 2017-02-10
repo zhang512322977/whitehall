@@ -4,15 +4,30 @@ class EditionTaxonomyTagForm
   attr_accessor :selected_taxons, :edition_content_id, :previous_version
 
   def self.load(content_id)
-    content_item = Whitehall
+    @content_item ||= Whitehall
       .publishing_api_v2_client
       .get_links(content_id)
 
     new(
-      selected_taxons: content_item["links"]["taxons"] || [],
+      selected_taxons: @content_item["links"]["taxons"] || [],
       edition_content_id: content_id,
-      previous_version: content_item["version"] || 0
+      previous_version: @content_item["version"] || 0,
+      breadcrumbs: breadcrumbs_for(@content_item)
     )
+  end
+
+  def self.breadcrumbs_for(content_item)
+    parent = Taxonomy.education.parent_taxon_for(content_item)
+
+    breadcrumbs [
+      {
+        title: parent.title
+      },
+      {
+        title: selected_taxons.first.title
+      }
+    ]
+
   end
 
   def publish!
