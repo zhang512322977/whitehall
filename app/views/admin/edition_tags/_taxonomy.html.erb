@@ -6,9 +6,10 @@
     <span><%= taxon.name %></span>
   </label>
 </p>
-<div class="topics">
+
   <% if taxon.children.present? %>
-  <%= render partial: "taxonomy", locals: {form: form, taxons: taxon.children} %>
+    <div class="topics">
+      <%= render partial: "taxonomy", locals: {form: form, taxons: taxon.children} %>
+    </div>
   <% end %>
-</div>
 <% end %>
