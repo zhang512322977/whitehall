@@ -8,8 +8,8 @@ class Admin::EditionTagsControllerTest < ActionController::TestCase
     @publishing_api_endpoint = GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT
     organisation = create(:organisation, content_id: "ebd15ade-73b2-4eaf-b1c3-43034a42eb37")
     @edition = create(:publication, organisations: [organisation])
-    @parent_taxon = "47b6ce42-0bfa-42ee-9ff1-7a9c71ee9727"
-    @child_taxon = "e16b62e0-9c54-4547-b8c0-7589d8af3906"
+
+    stub_education_taxonomy
   end
 
   def stub_publishing_api_links_with_taxons(content_id, taxons)
@@ -22,6 +22,49 @@ class Admin::EditionTagsControllerTest < ActionController::TestCase
         "version" => 1
       }
     )
+  end
+
+  def stub_education_taxonomy
+    education_content_id = "c58fdadd-7743-46d6-9629-90bb3ccc4ef0"
+    @parent_taxon = "904cfd73-2707-47b8-8754-5765ec5a5b68"
+    @child_taxon = "07fdd985-f3ec-4f4e-a316-3f4fd491bd64"
+
+    publishing_api_has_item({
+      "title" => "Education",
+      "base_path" => "/education",
+      "content_id" => education_content_id
+    })
+    key_stage_1 = {
+      "base_path" => "/education/primary-curriculum-key-stage-1",
+      "content_id" => @parent_taxon,
+      "title": "Primary curriculum, key stage 1",
+      "links" => {
+        "child_taxons" => [
+          {
+            "base_path" => "/education/primary-curriculum-key-stage-1-tests",
+            "content_id" => @child_taxon,
+            "title" => "Tests",
+            "links" => {}
+          }
+        ]
+      }
+    }
+
+    publishing_api_has_expanded_links({
+        content_id: education_content_id,
+        expanded_links: {
+          "child_taxons" => [
+            {
+              "base_path" => "/education/school-curriculum",
+              "content_id" => "7c75c541-403f-4cb1-9b34-4ddde816a80d",
+              "title" => "School Curriculum",
+              "links" => {
+                "child_taxons" => [key_stage_1]
+              }
+            }
+          ]
+        }
+    })
   end
 
   test 'should return an error on a version conflict' do

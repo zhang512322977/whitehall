@@ -1,34 +1,26 @@
 module Taxonomy
   def self.education
-    @education ||= begin
-      filename = Rails.root + "lib/taxonomy/education.json"
-      taxonomy = JSON.parse(File.read(filename))
-      TreeNode.new(content_item: taxonomy)
-    end
+    content_item = Whitehall.publishing_api_v2_client.get_content("c58fdadd-7743-46d6-9629-90bb3ccc4ef0")
+    expanded_links = Whitehall.publishing_api_v2_client.get_expanded_links("c58fdadd-7743-46d6-9629-90bb3ccc4ef0")
+
+    parser = PublishingApiLinkedEditionParser.new(content_item)
+    parser.add_expanded_links(expanded_links)
+    parser.linked_edition
   end
 
-  # TODO: move this to a gem, so we can use the same code in content tagger
-  class TreeNode
-    attr_reader :name, :content_item, :children
+  # TODO: move this to a gem
+  # https://github.com/alphagov/govuk_taxonomy_helpers/pull/1
+  class LinkedEdition
+    extend Forwardable
+    attr_reader :name, :content_id, :base_path, :children
     attr_accessor :parent_node
-    delegate :map, :each, to: :tree
+    def_delegators :tree, :map, :each
 
-    def initialize(content_item:, name_field: "title")
-      @name = content_item[name_field]
-      @content_item = content_item
+    def initialize(name:, base_path:, content_id:)
+      @name = name
+      @content_id = content_id
+      @base_path = base_path
       @children = []
-
-      child_taxons = content_item["links"]["child_taxons"]
-
-      if child_taxons.present?
-        child_nodes = child_taxons.map do |child|
-          TreeNode.new(name_field: name_field, content_item: child)
-        end
-
-        child_nodes.each do |child_node|
-          self << child_node
-        end
-      end
     end
 
     def <<(child_node)
@@ -60,9 +52,51 @@ module Taxonomy
       return 0 if root?
       1 + parent_node.node_depth
     end
+  end
 
-    def content_id
-      content_item["content_id"]
+  class PublishingApiLinkedEditionParser
+    attr_accessor :linked_edition
+
+    def initialize(edition_response, name_field: "title")
+      @linked_edition = LinkedEdition.new(
+        name: edition_response[name_field],
+        content_id: edition_response["content_id"],
+        base_path: edition_response["base_path"]
+      )
+
+      @name_field = name_field
     end
+
+    def add_expanded_links(expanded_links_response)
+      child_taxons = expanded_links_response["expanded_links"]["child_taxons"]
+
+      if !child_taxons.nil?
+        child_nodes = child_taxons.each do |child|
+          linked_edition << parse_nested_item(child)
+        end
+      end
+    end
+
+    private
+
+      attr_reader :name_field
+
+      def parse_nested_item(nested_item)
+        nested_linked_edition = LinkedEdition.new(
+          name: nested_item[name_field],
+          content_id: nested_item["content_id"],
+          base_path: nested_item["base_path"]
+        )
+
+        child_taxons = nested_item["links"]["child_taxons"]
+
+        if !child_taxons.nil?
+          child_nodes = child_taxons.each do |child|
+            nested_linked_edition << parse_nested_item(child)
+          end
+        end
+
+        nested_linked_edition
+      end
   end
 end
