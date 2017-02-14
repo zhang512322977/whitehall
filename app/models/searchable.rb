@@ -29,7 +29,9 @@ module Searchable
     :people,
     :public_timestamp,
     :publication_type,
+    :publishing_app,
     :release_timestamp,
+    :rendering_app,
     :search_format_types,
     :slug,
     :speech_type,
@@ -69,6 +71,12 @@ module Searchable
       self.searchable_options = options.reverse_merge \
         format:         -> (o) { o.class.model_name.element },
         content_id:     -> (o) { o.try(:content_id) },
+        content_store_document_type: -> (o) {
+          PublishingApiPresenters.presenter_for(o).content.fetch(:document_type)
+          content_store_document_type
+        },
+        rendering_app: -> (o) { o.rendering_app },
+        publishing_app: "whitehall",
         index_after:    :save,
         unindex_after:  :destroy,
         only:           :all,
@@ -91,6 +99,7 @@ module Searchable
             -> (_) { value }
           end
       end
+
 
       searchable_options[:index_after].each do |event|
         set_callback event, :after, :update_in_search_index
