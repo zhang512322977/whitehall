@@ -8,7 +8,8 @@ module Admin::EditionTagsHelper
       "edition_taxonomy_tag_form[taxons][]",
       taxon.content_id,
       checked,
-      id: taxon.content_id
+      id: taxon.content_id,
+      taxon_title: taxon.content_item["title"]
     )
   end
 end
