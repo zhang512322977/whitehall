@@ -4,7 +4,7 @@ module("BreadcrumbPreview", {
     <div class="topic-tree">\
         <p>\
           <label>\
-            <input type="checkbox" name="edition_taxonomy_tag_form[taxons][]" id="7c75c541-403f-4cb1-9b34-4ddde816a80d" value="7c75c541-403f-4cb1-9b34-4ddde816a80d" taxon_title="School curriculum" taxon_node_depth="1" />\
+            <input type="checkbox" name="edition_taxonomy_tag_form[taxons][]" id="7c75c541-403f-4cb1-9b34-4ddde816a80d" value="7c75c541-403f-4cb1-9b34-4ddde816a80d" taxon_title="School curriculum" taxon_node_depth="1" checked="checked"/>\
             <span>School curriculum</span>\
           </label>\
         </p>\
@@ -30,9 +30,10 @@ module("BreadcrumbPreview", {
 });
 
 test("It fetches the current checked checkboxes", function() {
-  var subject = new GOVUK.BreadcrumbPreview();
+  var subject = new GOVUKAdmin.Modules.BreadcrumbPreview();
 
-  subject.fetchCurrentCheckboxes($('#qunit-fixture .topic-tree'));
-
-  ok(false);
+  ok(
+    subject.fetchCurrentCheckboxes($('#qunit-fixture .topic-tree')),
+    $('#7c75c541-403f-4cb1-9b34-4ddde816a80d')
+  );
 });
