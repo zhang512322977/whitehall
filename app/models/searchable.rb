@@ -25,7 +25,6 @@ module Searchable
     :operational_field,
     :organisation_state,
     :organisation_type,
-    :organisations,
     :people,
     :public_timestamp,
     :publication_type,
@@ -49,11 +48,6 @@ module Searchable
     # 2. Through the Edition::Topics and Edition::TopicalEvents concerns.
     #    These override #search_index and add to the policy_areas key.
     :policy_areas,
-
-    # DID YOU MEAN: Topic?
-    # See above: this should be renamed once the naming for policy areas is
-    # consistent.
-    :specialist_sectors,
 
     :world_locations,
   ]

@@ -49,7 +49,6 @@ module DevelopmentModeStubs
         "description" => announcement.summary,
         "slug" => announcement.slug,
         "release_timestamp" => announcement.current_release_date.release_date.iso8601,
-        "organisations" => announcement.organisations_slugs,
         "policy_areas" => announcement.topic_slugs,
         "display_type" => announcement.publication_type.singular_name,
         "search_format_types" => ["statistics_announcement"],

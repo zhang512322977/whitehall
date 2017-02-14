@@ -176,7 +176,6 @@ class Organisation < ActiveRecord::Base
              link: :search_link,
              content: :indexable_content,
              description: :description_for_search,
-             organisations: :search_organisations,
              boost_phrases: :acronym,
              slug: :slug,
              organisation_state: :searchable_govuk_status,
@@ -385,10 +384,6 @@ class Organisation < ActiveRecord::Base
 
   def search_link
     Whitehall.url_maker.organisation_path(self)
-  end
-
-  def search_organisations
-    parent_organisations.map(&:slug)
   end
 
   def published_speeches

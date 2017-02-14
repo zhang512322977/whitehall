@@ -76,7 +76,6 @@ class StatisticsAnnouncement < ActiveRecord::Base
               description: :summary,
               display_type: :display_type,
               slug: :slug,
-              organisations: :organisations_slugs,
               policy_areas: :topic_slugs,
               release_timestamp: :release_date,
               statistics_announcement_state: :state,
@@ -146,10 +145,6 @@ class StatisticsAnnouncement < ActiveRecord::Base
 
   alias_method :base_path, :public_path
   alias_method :search_link, :public_path
-
-  def organisations_slugs
-    organisations.map(&:slug)
-  end
 
   def topic_slugs
     topics.map(&:slug)
