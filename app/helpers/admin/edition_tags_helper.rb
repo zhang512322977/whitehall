@@ -9,7 +9,8 @@ module Admin::EditionTagsHelper
       taxon.content_id,
       checked,
       id: taxon.content_id,
-      taxon_title: taxon.content_item["title"]
+      taxon_title: taxon.name,
+      taxon_node_depth: taxon.node_depth,
     )
   end
 end
