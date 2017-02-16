@@ -4,7 +4,6 @@
   Modules.BreadcrumbPreview = function() {
     var that = this;
 
-
     that.fetchCurrentCheckboxes = function(wrapper) {
       return $('.topic-tree :checked');
     };

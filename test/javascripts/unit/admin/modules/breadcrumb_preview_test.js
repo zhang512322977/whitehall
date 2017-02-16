@@ -29,6 +29,10 @@ module("BreadcrumbPreview", {
   }
 });
 
+// test fetch the current checked checkboxes
+// test function expecting array of arrays (taxon trees...)
+// test create the html from the output
+
 test("It fetches the current checked checkboxes", function() {
   var subject = new GOVUKAdmin.Modules.BreadcrumbPreview();
 
@@ -36,4 +40,12 @@ test("It fetches the current checked checkboxes", function() {
     subject.fetchCurrentCheckboxes($('#qunit-fixture .topic-tree')),
     $('#7c75c541-403f-4cb1-9b34-4ddde816a80d')
   );
+});
+
+test('it creates a structure for multiple breadcrumb trees', function() {
+  ok(true, false);
+});
+
+test("it outputs a string representing the tree structure", function() {
+  ok(true, false);
 });
