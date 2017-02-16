@@ -43,6 +43,7 @@ test("It fetches the current checked checkboxes", function() {
 });
 
 test('it creates a structure for multiple breadcrumb trees', function() {
+  // will need a fixture with more checkbox elements
   ok(true, false);
 });
 
