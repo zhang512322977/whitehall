@@ -33,9 +33,9 @@ module("BreadcrumbPreview", {
 // test function expecting array of arrays (taxon trees...)
 // test create the html from the output
 
-test("It fetches the current checked checkboxes", function() {
-  var subject = new GOVUKAdmin.Modules.BreadcrumbPreview();
+var subject = new GOVUKAdmin.Modules.BreadcrumbPreview();
 
+test("It fetches the current checked checkboxes", function() {
   ok(
     subject.fetchCurrentCheckboxes($('#qunit-fixture .topic-tree')),
     $('#7c75c541-403f-4cb1-9b34-4ddde816a80d')
@@ -48,5 +48,14 @@ test('it creates a structure for multiple breadcrumb trees', function() {
 });
 
 test("it outputs a string representing the tree structure", function() {
-  ok(true, false);
+  var arrays = [
+    ['School curriculum' , 'Primary curriculum, key stage 1', 'Tests'],
+    ['Further and higher education, skills and vocational training', 'Apprenticeships, traineeships and internships', 'Employers and training organisations']
+  ];
+
+  equal(
+    subject.toString(arrays),
+    "School curriculum > Primary curriculum, key stage 1 > <b>Tests</b><br>" +
+    "Further and higher education, skills and vocational training > Apprenticeships, traineeships and internships > <b>Employers and training organisations</b><br>"
+  )
 });

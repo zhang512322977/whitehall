@@ -18,17 +18,19 @@
       arrayOfArrays.forEach(function(values, index) {
         var result = values.map(function (value, index) {
           if (index == (values.length - 1)) {
-            value = "<b>" + value + "</b>"
+            value = "<b>" + value + "</b>";
           }
           return value;
         });
 
-        string = string.concat(result.join(' > ') + '<br />');
+        string = string.concat(result.join(' > ') + '<br>');
       });
 
       return string;
     };
 
+    // we need to consider the parents of the selected checkbox.
+    // (use node_depth for that)
     that.start = function(element) {
       var checkboxes = that.fetchCurrentCheckboxes();
 
