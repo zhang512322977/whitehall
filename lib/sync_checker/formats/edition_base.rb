@@ -66,7 +66,8 @@ module SyncChecker
               expected_details_hash(edition_expected_in_draft)
             end
           ),
-          Checks::TranslationsCheck.new(edition_expected_in_draft.available_locales)
+          Checks::TranslationsCheck.new(edition_expected_in_draft.available_locales),
+          Checks::HttpStatusCheck.new(disallowed_http_codes)
         ]
       end
 
@@ -111,7 +112,8 @@ module SyncChecker
           Checks::UnpublishedCheck.new(document),
           Checks::TranslationsCheck.new(edition_expected_in_live.available_locales),
           Checks::TopicsCheck.new(edition_expected_in_live,
-                                  topic_blacklist: DraftTopicContentIds.fetch)
+                                  topic_blacklist: DraftTopicContentIds.fetch),
+          Checks::HttpStatusCheck.new(disallowed_http_codes)
         ]
       end
 
@@ -189,6 +191,10 @@ module SyncChecker
         document.published_edition.nil? &&
           document.pre_publication_edition &&
           document.pre_publication_edition.rejected?
+      end
+
+      def disallowed_http_codes
+        (400..599)
       end
     end
   end
